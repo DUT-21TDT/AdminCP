@@ -1,0 +1,11 @@
+.table-title{
+    position: absolute; 
+    margin-top: 10px;
+}
+
+@media screen and (max-width: 800px) {
+    .table-title{
+        position: relative; 
+        margin-top: 0;
+    }
+}

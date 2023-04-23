@@ -4,7 +4,9 @@ var router = express.Router();
 
 router.get("/", (req, res, next) => {
     res.render("pages/dashboard", {
-        title: "Dashboard"});
+        title: "Dashboard",
+        name:"dashboard"
+    });
 });
 
 router.get("/dashboard", (req, res, next) => {

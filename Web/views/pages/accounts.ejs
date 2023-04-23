@@ -1,44 +1,52 @@
 <div class="row">
     <div class="d-flex">
         <div class="card flex-fill">
-            <table class="table table-hover my-0">
-                <thead>
-                    <tr>
-                        <th>STT</th>
-                        <th >Tên thành viên</th>
-                        <th>Trạng thái</th>
-                        <th >Username</th>
-                        <th >Email</th>
-                        <th>Hành động</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td >Nguyễn Văn Trường Sơn</td>
-                        <td><span class="badge bg-danger">Đã dừng hoạt động</span></td>
-                        <td >nvtruongson</td>
-                        <td >nguyenvantruongson@gmail.com</td>
-                        <td>
-                            <a><i class="align-middle" data-feather="unlock"></i> Bỏ chặn truy cập</a> |  
-                            <a><i class="align-middle" data-feather="info"></i> Xem</a> | 
-                            <a><i class="align-middle" data-feather="trash-2"></i> Xóa </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td >Nguyễn Thúc Hoàng</td>
-                        <td><span class="badge bg-success">Đang hoạt động</span></td>
-                        <td >ngthuchoang</td>
-                        <td >nguyenthuchoang@gmail.com</td>
-                        <td>
-                            <a><i class="align-middle" data-feather="lock"></i> Chặn truy cập</a> |  
-                            <a><i class="align-middle" data-feather="info"></i> Xem</a> | 
-                            <a><i class="align-middle" data-feather="trash-2"></i> Xóa </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="card-header">            
+                <h5 class="card-title mb-0 table-title">Danh sách thành viên</h5>
+                <div class="col-sm-3" style="margin:auto; margin-right: 10px;">
+                    <input type="text" class="form-control" placeholder="Nhập tên thành viên..." aria-label="Nhập tên thành viên...">
+                  </div>
+            </div>
+            <div class = "table-responsive">
+                <table class="table table-hover my-0 ">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Tên thành viên</th>
+                            <th scope="col">Trạng thái</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td scope="row">1</td>
+                            <td >Nguyễn Văn Trường Sơn</td>
+                            <td><span class="badge bg-danger">Đã dừng hoạt động</span></td>
+                            <td >nvtruongson</td>
+                            <td >nguyenvantruongson@gmail.com</td>
+                            <td>
+                                <a class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bỏ chặn tài khoản"><i class="align-middle" data-feather="unlock"></i></a>
+                                <a class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Xem thông tin tài khoản"><i class="align-middle" data-feather="info"></i></a>
+                                <a class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Xóa tài khoản"><i class="align-middle" data-feather="trash-2"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row">2</td>
+                            <td >Nguyễn Thúc Hoàng</td>
+                            <td><span class="badge bg-success">Đang hoạt động</span></td>
+                            <td >ngthuchoang</td>
+                            <td >nguyenthuchoang@gmail.com</td>
+                            <td>
+                                <a class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Chặn tài khoản"><i class="align-middle" data-feather="lock"></i></a>
+                                <a class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Xem thông tin tài khoản"><i class="align-middle" data-feather="info"></i></a>
+                                <a class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Xóa tài khoản"><i class="align-middle" data-feather="trash-2"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
