@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col">
+        <div class="mb-3">
+            <label for="txtUsername" class="form-label">Username</label>
+            <input type="text" class="form-control" id="txtUsername" placeholder="<%= accountInfo.username %>" disabled>
+        </div>
+        <div class="mb-3">
+            <label for="txtFullName" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="txtFullName" placeholder="<%= accountInfo.fullName %>" disabled>
+        </div>
+        <div class="mb-3">
+            <label for="txtEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="txtEmail" placeholder="<%= accountInfo.email %>" disabled>
+        </div>
+        <div class="mb-3">
+            <label for="Gender" class="form-label">Gender</label>
+            <select class="form-select" aria-label="Default select example" id = "Gender" disabled>
+                <option value="0" 
+                <% 
+                        if (accountInfo.gender === 0) {
+                %> 
+                            selected
+                <% } %>
+                >Male</option>
+                <option value="1"
+                <% 
+                        if (accountInfo.gender === 1) {
+                %> 
+                            selected
+                <% } %>
+                >Female</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="dayOfBirthday" class="form-label">Day of Birthday</label>
+            <input type="datetime" class="form-control" id="dayOfBirthday" placeholder="<%= accountInfo.dayOfBirthday %>" disabled>
+        </div>
+    </div>
+    <div class="col avatar-comp">
+       
+       <% 
+            let avatar = "/img/avatars/avatar.jpg";
+            if (accountInfo.avatar != null && accountInfo.avatar != "") avatar = accountInfo.avatar;
+            const avatarcomp = `<img src = "`+ avatar +`" class="rounded mx-auto d-block avatar-view" alt = "Hình nền đại diện">`
+        %>
+        <%- avatarcomp %>
+    </div>
+    <div class = "flex">
+        <td>
+        <%
+            let btnBlockStatus = `<a href="/AdminCP/Accounts/changeAccountStatus/` + accountInfo.accountId + `" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Chặn tài khoản">
+            <i class="align-middle" data-feather="lock"></i>
+                Chặn tài khoản
+            </a>`
+            if (accountInfo.isBlocked) {
+                btnBlockStatus = `<a href="/AdminCP/Accounts/changeAccountStatus/` + accountInfo.accountId + `" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bỏ chặn tài khoản">
+                <i class="align-middle" data-feather="unlock"></i>
+                Bỏ chặn tài khoản
+            </a>`
+            }
+        %>
+        
+        <%- btnBlockStatus %>
+        <a href="/AdminCP/Accounts/delete/<%= accountInfo.accountId%>" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Xóa tài khoản"><i class="align-middle" data-feather="trash-2"></i> Xóa tài khoản</a>
+    </div>
+</div>

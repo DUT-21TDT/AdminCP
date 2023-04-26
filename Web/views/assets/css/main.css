@@ -3,9 +3,25 @@
     margin-top: 10px;
 }
 
+.avatar-view{
+    width: 250px;
+    height: 250px;
+    border: 10px solid #ffffff;
+}
+
 @media screen and (max-width: 800px) {
     .table-title{
         position: relative; 
         margin-top: 0;
     }
+
+    .avatar-comp{
+        width: 100%;
+    }
+
+    div.avatar-comp img.avatar-view{
+        width: 300px;
+        height: auto;
+    }
 }
+

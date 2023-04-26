@@ -20,30 +20,41 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td scope="row">1</td>
-                            <td >Nguyễn Văn Trường Sơn</td>
-                            <td><span class="badge bg-danger">Đã dừng hoạt động</span></td>
-                            <td >nvtruongson</td>
-                            <td >nguyenvantruongson@gmail.com</td>
-                            <td>
-                                <a class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bỏ chặn tài khoản"><i class="align-middle" data-feather="unlock"></i></a>
-                                <a class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Xem thông tin tài khoản"><i class="align-middle" data-feather="info"></i></a>
-                                <a class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Xóa tài khoản"><i class="align-middle" data-feather="trash-2"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">2</td>
-                            <td >Nguyễn Thúc Hoàng</td>
-                            <td><span class="badge bg-success">Đang hoạt động</span></td>
-                            <td >ngthuchoang</td>
-                            <td >nguyenthuchoang@gmail.com</td>
-                            <td>
-                                <a class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Chặn tài khoản"><i class="align-middle" data-feather="lock"></i></a>
-                                <a class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Xem thông tin tài khoản"><i class="align-middle" data-feather="info"></i></a>
-                                <a class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Xóa tài khoản"><i class="align-middle" data-feather="trash-2"></i></a>
-                            </td>
-                        </tr>
+                        <% 
+                        let count = 1;
+                        accounts.forEach(account => { %>
+                            <tr>
+                                <td scope="row"><%= count %></td>
+
+                                <td><%= account.fullName %></td>
+                                <% 
+                                    let blockedStatusTitle = '<span class="badge bg-success">Đang hoạt động</span>';
+                                    if (account.isBlocked) {
+                                        blockedStatusTitle = '<span class="badge bg-danger">Đã dừng hoạt động</span>';
+                                    }
+                                %>
+                                <td><%- blockedStatusTitle %> </td>
+
+                                <td><%= account.username %></td>
+                                <td><%= account.email %></td>
+                                <td>
+                                    <%
+                                        let btnBlockStatus = `<a href="/AdminCP/Accounts/changeAccountStatus/` + account.accountId + `" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Chặn tài khoản">
+                                        <i class="align-middle" data-feather="lock"></i></a>`
+                                        if (account.isBlocked) {
+                                            btnBlockStatus = `<a href="/AdminCP/Accounts/changeAccountStatus/` + account.accountId + `" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bỏ chặn tài khoản">
+                                            <i class="align-middle" data-feather="unlock"></i></a>`
+                                        }
+                                    %>
+                                    
+                                    <%- btnBlockStatus %>
+                                    <a href="/AdminCP/Accounts/info/<%= account.accountId%>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Xem thông tin tài khoản"><i class="align-middle" data-feather="info"></i></a>
+                                    <a href="/AdminCP/Accounts/delete/<%= account.accountId%>" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Xóa tài khoản"><i class="align-middle" data-feather="trash-2"></i></a>
+                                </td>
+                            </tr>
+                        <%
+                            count++;
+                        }); %>
                     </tbody>
                 </table>
             </div>
