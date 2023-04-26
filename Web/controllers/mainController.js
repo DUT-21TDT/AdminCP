@@ -16,13 +16,6 @@ router.get("/dashboard", (req, res, next) => {
     });
 });
 
-// router.get("/Accounts", (req, res, next) => {
-//     res.render("pages/accounts", {
-//         title: "Quản lý tài khoản",
-//         name: "accounts",
-//     });
-// });
-
 router.get("/Foods", (req, res, next) => {
     res.render("pages/foods", {
         title: "Quản lý thực phẩm",

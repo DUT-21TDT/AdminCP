@@ -6,7 +6,7 @@ const account = require(__path_models + controllerName);
 
 let data = [
     new account("1", "nvtruongson", "Nguyễn Văn Trường Sơn", "nguyenvantruongson@gmail.com", "06/03/2003", "https://i.imgur.com/cqF2jpp.jpeg", 1, true),
-    new account("2", "thuchoang2003", "Nguyễn Thúc Hoàng", "nguyenthuchoang17112003@gmail.com", "17/11/2003", "", 0, false),
+    new account("2", "thuchoang2003", "Nguyễn Thúc Hoàng", "nguyenthuchoang17112003@gmail.com", "17/11/2003", "https://i.imgur.com/yuEqT4B.jpg", 0, false),
     new account("3", "ncnquang", "Nguyễn Cửu Nhật Quang", "ncnquang@gmail.com", "eo biet :>", "", 0, false),
 ]
 
