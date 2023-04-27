@@ -39,17 +39,17 @@
                                 <td><%= account.email %></td>
                                 <td>
                                     <%
-                                        let btnBlockStatus = `<a href="/AdminCP/Accounts/changeAccountStatus/` + account.accountId + `" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Chặn tài khoản">
-                                        <i class="align-middle" data-feather="lock"></i></a>`
+                                        let btnBlockStatus = `<button value="`+ account.username + `" class="btn btn-secondary btnChangeLockStatus lock" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Chặn tài khoản">
+                                        <i class="align-middle" data-feather="lock"></i></button>`
                                         if (account.isBlocked) {
-                                            btnBlockStatus = `<a href="/AdminCP/Accounts/changeAccountStatus/` + account.accountId + `" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bỏ chặn tài khoản">
-                                            <i class="align-middle" data-feather="unlock"></i></a>`
+                                            btnBlockStatus = `<button value="`+ account.username + `" class="btn btn-secondary btnChangeLockStatus unlock" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bỏ chặn tài khoản">
+                                        <i class="align-middle" data-feather="unlock"></i></button>`
                                         }
                                     %>
                                     
                                     <%- btnBlockStatus %>
                                     <a href="/AdminCP/Accounts/info/<%= account.accountId%>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Xem thông tin tài khoản"><i class="align-middle" data-feather="info"></i></a>
-                                    <a href="/AdminCP/Accounts/delete/<%= account.accountId%>" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Xóa tài khoản"><i class="align-middle" data-feather="trash-2"></i></a>
+                                    <button value="<%= account.username%>" class="btn btn-danger btnDeleteAccount" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Xóa tài khoản"><i class="align-middle" data-feather="trash-2"></i></button>
                                 </td>
                             </tr>
                         <%
@@ -61,3 +61,5 @@
         </div>
     </div>
 </div>
+
+<script src="/js/pages/accounts.page.js"></script>

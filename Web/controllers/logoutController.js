@@ -6,10 +6,7 @@ const dotenv = require("dotenv");
 dotenv.config(`${process.env.SECRET_KEY}`);
 
 router.get("/", async (req, res, next) => {
-
-
-    // do something before logout
-    res.redirect("/AdminCP/login");
+  req.session.destroy(function(err) {return res.redirect("/AdminCP/login");});
 });
 
 module.exports = router;

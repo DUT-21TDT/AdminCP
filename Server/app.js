@@ -1,13 +1,16 @@
-var createError = require('http-errors');
-var express     = require('express');
+const createError = require('http-errors');
+const express     = require('express');
+const helmet = require("helmet")
 const morganBody = require("morgan-body")
 const bodyParser = require("body-parser")
 
-var sqlserver = require("mssql/msnodesqlv8");
+const sqlserver = require("mssql/msnodesqlv8");
 let port = process.env.PORT || 3000;
 
 
-var app = express()
+let app = express()
+app.disable('x-powered-by');
+app.use(helmet());
 app.use(express.json());
 
 const pathConfig = require('./path');

@@ -1,13 +1,47 @@
-var createError = require('http-errors');
-var express     = require('express');
-var ejsLayout   = require('express-ejs-layouts')
-const bodyParser = require("body-parser")
-const path = require('path');
-const pathConfig = require('./path');
-let port = process.env.PORT || 8080;
+const createError = require('http-errors');
+const express     = require('express');
+const ejsLayout   = require('express-ejs-layouts');
+const helmet      = require('helmet');
+const morgan      = require('morgan')
+const bodyParser  = require("body-parser")
+const path        = require('path');
+const rfs         = require("rotating-file-stream");
+const pathConfig  = require('./path');
+const dotenv      = require("dotenv");
+const session     = require('express-session');
 
-var app = express()
-var http = require('http').Server(app);
+dotenv.config();
+const port = process.env.PORT || 8080;
+
+const isProduction = process.env.NODE_ENV === "production";
+
+const accessLogStream = rfs.createStream("access.log", {
+  interval: "1d",
+  path: path.join(__dirname, "log"),
+});
+
+const app = express()
+app.disable('x-powered-by');
+app.use(
+  helmet.contentSecurityPolicy({
+    useDefaults: true,
+    directives: {
+      "img-src": ["'self'", "https: data:"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+    }
+  })
+)
+
+app.use(
+  isProduction ? morgan("combined", {stream:accessLogStream}) : morgan("dev")
+);
+
+app.use(session({
+  resave: true, 
+  saveUninitialized: true, 
+  secret: 'somesecret', 
+  cookie: { maxAge: 60000 }}));
+
 app.use(express.json());
 
 global.__base               = __dirname + '/';
@@ -20,7 +54,7 @@ global.__folder_schemas     = __path_app + pathConfig.folder_schemas + '/';
 global.__path_views       = __path_app + pathConfig.folder_views + '/';
 
 // set configuration value of bodyParser
-var bParserConfig = require(__path_configs + "bodyParserConfig.js");
+const bParserConfig = require(__path_configs + "bodyParserConfig.js");
 app.use(bodyParser.urlencoded({
   limit: bParserConfig.limit, 
   extended: bParserConfig.extended, 
@@ -51,6 +85,6 @@ app.use((err, req, res, next)=> {
 });
 
 // start the Express server
-http.listen( port, () => {
+app.listen( port, () => {
   console.log( `server started at http://localhost:${ port }` );
 } );

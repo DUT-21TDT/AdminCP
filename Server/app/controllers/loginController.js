@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
-const dotenv = require("dotenv");
-dotenv.config(`${process.env.SECRET_KEY}`);
 
 
 const controllerName = 'user';
@@ -64,8 +62,6 @@ router.post("/", (req, res, next) => {
             "data": null
         }
     );
-
-    res.send(data);
 });
 
 

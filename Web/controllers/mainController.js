@@ -1,8 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
+const auth = require('../middleware/auth');
 
-router.get("/", (req, res, next) => {
+
+router.get("/", auth, (req, res, next) => {
     res.render("pages/dashboard", {
         title: "Dashboard",
         name:"dashboard"

@@ -30,8 +30,9 @@ router.post("/", async (req, res, next) => {
             console.log({message: err});
         });
     
-        if (data["success"]) {
-            
+        if (data.success) {
+            req.session.token = data.data;
+
             res.status(data["status"]).send("<script> alert('"+data["message"]+"'); window.location = '/AdminCP';</script>");
         } else {
             res.status(data["status"]).send("<script> alert('"+data["message"]+"'); window.location = '';</script>");

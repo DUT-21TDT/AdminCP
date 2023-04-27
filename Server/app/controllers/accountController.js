@@ -39,4 +39,52 @@ router.get("/:id", (req, res) => {
     }
 });
 
+router.put("/btnChangeLockStatus/", (req, res) => {
+
+    const username = req.body.username;
+    const account = data.find(
+        (data) => data.username === username
+    );
+
+    if (!account) 
+    {
+        res.status(404).json({
+            "success": false,
+            "notice": "Don't find the account by Id = " + username,
+            "data": null,
+        });
+    }else {
+        account.isBlocked = (!account.isBlocked);
+        res.status(200).json({
+            "success": true,
+            "notice": "Cập nhật trạng thái block thành công!",
+            "data": account
+        });
+    }
+});
+
+router.delete("/delete/:username", (req, res) => {
+
+    const username = req.params.username;
+    const account = data.find(
+        (data) => data.username === username
+    );
+
+    if (!account) 
+    {
+        res.status(404).json({
+            "success": false,
+            "notice": "Don't find the account by Id = " + username,
+        });
+    }else {
+        let index = data.indexOf(account);
+        data.splice(index, 1);
+        res.status(200).json({
+            "success": true,
+            "notice": "Đã xóa tài khoản [" + username + "] ra khỏi hệ thống !",
+        });
+    }
+});
+
+
 module.exports = router;
