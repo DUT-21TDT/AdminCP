@@ -23,7 +23,7 @@
                                         <img class="img-fluid" alt="" src="">
                                         <h2 class="m-b-0">Đăng Nhập</h2>
                                     </div>
-                                    <form action="" method="post">
+                                    <form id="login_form" action="" method="post">
                                         <div class="form-group">
                                             <label class="font-weight-semibold" for="userName">Username:</label>
                                             <div class="input-affix">
@@ -57,4 +57,14 @@
         </div>
     </div>
 </body>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.validate.min.js"></script>
+
+<script>
+$(document).ready(function() {
+$("#login_form").validate();
+});
+</script>
+
 </html>
+

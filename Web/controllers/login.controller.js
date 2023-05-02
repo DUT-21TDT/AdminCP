@@ -1,24 +1,14 @@
-var express = require('express');
-var router = express.Router();
-var jwt = require('jsonwebtoken');
 var axios = require('axios');
-const dotenv = require("dotenv");
-dotenv.config(`${process.env.SECRET_KEY}`);
 
-const controllerName = 'user';
-const MainModel = require(__path_models + controllerName);
-
-router.get("/", (req, res, next) => {
+let LoginPageView = (req, res, next) => {
     res.sendFile(__path_views + '/statics/login.html');
-});
+}
 
-router.post("/", async (req, res, next) => {
+let LoginSubmitEvent = async (req, res, next) => {
     var username = req.body.username;
     var password = req.body.password;
 
-    const instance = axios.create({
-        baseURL: 'http://localhost:3000/api/v1/login'
-      });
+    const instance = axios.create({baseURL: `${process.env.API_URL}/login`});
     
     try {
         var data = await instance.post("/", {
@@ -40,6 +30,9 @@ router.post("/", async (req, res, next) => {
     } catch (error) {
         res.status(500).send("<script> alert('500'); window.location = '';</script>");
     }
-});
+};
 
-module.exports = router;
+module.exports = {
+    LoginPageView,
+    LoginSubmitEvent
+};

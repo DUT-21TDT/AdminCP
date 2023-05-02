@@ -1,15 +1,9 @@
-let express = require('express');
-let router = express.Router();
 const axios = require('axios');
-const dotenv = require("dotenv");
-dotenv.config(`${process.env.SECRET_KEY}`);
 
-const auth = require('../middleware/auth');
+// API calling
+const instance = axios.create({baseURL: `${process.env.API_URL}/accounts`});
 
-
-const instance = axios.create({baseURL: 'http://localhost:3000/api/v1/accounts'});
-
-router.get("/", auth, async (req, res, next) => {
+let getAccounts = async (req, res, next) => {
     try {
         let responseData = await instance.get("/").then(response => {
             return response.data;
@@ -36,11 +30,9 @@ router.get("/", auth, async (req, res, next) => {
     } catch (error) {
         res.status(500);
     }
+};
 
-    
-});
-
-router.get("/info/:id", auth, async (req, res, next) => {
+let getAccountInfoByID = async (req, res, next) => {
     const accountId = req.params.id;
 
     try {
@@ -67,13 +59,9 @@ router.get("/info/:id", auth, async (req, res, next) => {
     } catch (error) {
         res.status(500);
     }
-});
+};
 
-router.put("/update/:username", auth, (req, res, next) => {
-    let id = req.params.id;
-});
-
-router.put("/btnChangeLockStatus/:username", async (req, res, next) => {
+let changeBlockStatus = async (req, res, next) => {
     let username = req.params.username;
 
     try {
@@ -104,13 +92,13 @@ router.put("/btnChangeLockStatus/:username", async (req, res, next) => {
     }
 
     
-});
+};
 
-router.delete("/delete/:username", auth, async (req, res, next) => {
+let deleteAccountByUsername = async (req, res, next) => {
     let username = req.params.username;
 
     try {
-        let responseData = await instance.delete("/delete/" + username).then(response => {
+        let responseData = await instance.delete(`/delete/${username}`).then(response => {
             return response.data;
         }).catch((err) => {
             console.log({message: err});
@@ -135,6 +123,11 @@ router.delete("/delete/:username", auth, async (req, res, next) => {
     } catch (error) {
         res.status(500);
     }
-});
+};
 
-module.exports = router;
+module.exports = {
+    getAccounts,
+    getAccountInfoByID,
+    changeBlockStatus,
+    deleteAccountByUsername,
+};

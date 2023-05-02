@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-router.use('/', require(`${__path_routes}/v1`));
+router.get("/", require(`${__path_controllers}/logout.controller.js`));
 
 module.exports = router;

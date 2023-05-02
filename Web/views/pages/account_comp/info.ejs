@@ -41,19 +41,19 @@
        <% 
             let avatar = "/img/avatars/default-avatar.png";
             if (accountInfo.avatar != null && accountInfo.avatar != "") avatar = accountInfo.avatar;
-            const avatarcomp = `<img crossorigin="anonymous" src = "`+ avatar +`" class="rounded mx-auto d-block avatar-view" alt = "Hình nền đại diện">`
+            const avatarcomp = `<img crossorigin="anonymous" src = "${avatar}" class="rounded mx-auto d-block avatar-view" alt = "Hình nền đại diện">`
         %>
         <%- avatarcomp %>
     </div>
     <div class = "flex">
         <td>
         <%
-            let btnBlockStatus = `<button  value="` + accountInfo.username + `" class="btn btn-secondary btnChangeLockStatus lock" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Chặn tài khoản">
+            let btnBlockStatus = `<button  value="${accountInfo.username}" class="btn btn-secondary btnChangeLockStatus lock" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Chặn tài khoản">
             <i class="align-middle" data-feather="lock"></i>
                 Chặn tài khoản
             </button>`
             if (accountInfo.isBlocked) {
-                btnBlockStatus = `<button value="` + accountInfo.username + `" class="btn btn-secondary btnChangeLockStatus unlock" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bỏ chặn tài khoản">
+                btnBlockStatus = `<button value="${accountInfo.username}" class="btn btn-secondary btnChangeLockStatus unlock" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bỏ chặn tài khoản">
                 <i class="align-middle" data-feather="unlock"></i>
                 Bỏ chặn tài khoản
             </button>`

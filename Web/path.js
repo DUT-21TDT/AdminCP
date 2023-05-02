@@ -5,5 +5,7 @@ module.exports = {
     folder_models : 'models',
     folder_schemas :'schemas',
     folder_validates : 'validates',
+    folder_controllers : 'controllers',
+    folder_middleware : 'middleware',
     folder_views: 'views',
 };

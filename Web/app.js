@@ -9,10 +9,7 @@ const rfs         = require("rotating-file-stream");
 const pathConfig  = require('./path');
 const dotenv      = require("dotenv");
 const session     = require('express-session');
-
 dotenv.config();
-const port = process.env.PORT || 8080;
-
 const isProduction = process.env.NODE_ENV === "production";
 
 const accessLogStream = rfs.createStream("access.log", {
@@ -40,18 +37,20 @@ app.use(session({
   resave: true, 
   saveUninitialized: true, 
   secret: 'somesecret', 
-  cookie: { maxAge: 60000 }}));
+  cookie: { maxAge: 60 * 60000 }})); // 60000 is one minute
 
 app.use(express.json());
 
-global.__base               = __dirname + '/';
-global.__path_app           = __base + pathConfig.folder_app + '/';
-global.__path_models        = __path_app + pathConfig.folder_models + '/';
-global.__path_routes        = __path_app + pathConfig.folder_routes + '/';
-global.__path_configs       = __path_app + pathConfig.folder_config + '/';
-global.__folder_validates   = __path_app + pathConfig.folder_validates + '/';
-global.__folder_schemas     = __path_app + pathConfig.folder_schemas + '/';
-global.__path_views       = __path_app + pathConfig.folder_views + '/';
+global.__base                 = __dirname + '/';
+global.__path_app             = __base + pathConfig.folder_app + '/';
+global.__path_models          = __path_app + pathConfig.folder_models + '/';
+global.__path_routes          = __path_app + pathConfig.folder_routes + '/';
+global.__path_configs         = __path_app + pathConfig.folder_config + '/';
+global.__path_controllers     = __path_app + pathConfig.folder_controllers + '/';
+global.__path_middleware      = __path_app + pathConfig.folder_middleware  + '/';
+global.__folder_validates     = __path_app + pathConfig.folder_validates + '/';
+global.__folder_schemas       = __path_app + pathConfig.folder_schemas + '/';
+global.__path_views           = __path_app + pathConfig.folder_views + '/';
 
 // set configuration value of bodyParser
 const bParserConfig = require(__path_configs + "bodyParserConfig.js");
@@ -84,7 +83,4 @@ app.use((err, req, res, next)=> {
     res.sendFile(__path_views + "/statics/500.html");
 });
 
-// start the Express server
-app.listen( port, () => {
-  console.log( `server started at http://localhost:${ port }` );
-} );
+module.exports = app;
