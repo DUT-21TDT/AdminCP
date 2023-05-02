@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-router.use('/', require(`${__path_routes}/v1`));
+router.use('/AdminCP', require(`${__path_routes}/AdminCP`));
 
 module.exports = router;

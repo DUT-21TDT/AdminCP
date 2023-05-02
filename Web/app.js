@@ -47,7 +47,7 @@ global.__path_models          = __path_app + pathConfig.folder_models + '/';
 global.__path_routes          = __path_app + pathConfig.folder_routes + '/';
 global.__path_configs         = __path_app + pathConfig.folder_config + '/';
 global.__path_controllers     = __path_app + pathConfig.folder_controllers + '/';
-global.__path_middleware      = __path_app + pathConfig.folder_middleware  + '/';
+global.__path_middleware      = __path_app + pathConfig.folder_middleware + '/';
 global.__folder_validates     = __path_app + pathConfig.folder_validates + '/';
 global.__folder_schemas       = __path_app + pathConfig.folder_schemas + '/';
 global.__path_views           = __path_app + pathConfig.folder_views + '/';
@@ -66,7 +66,7 @@ app.use(ejsLayout);
 app.set('layout', './layouts/full_layout');
 app.set('view engine', 'ejs');
 app.use('/', express.static(path.join(__path_views, "assets")));
-app.use('/AdminCP', require(__path_routes));
+app.use('/', require(__path_routes));
 
 // catch 404 and forward to error handler
 app.use((req, res, next)=> {
