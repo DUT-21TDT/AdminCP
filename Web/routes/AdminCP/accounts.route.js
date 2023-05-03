@@ -1,7 +1,7 @@
 let express = require('express');
 let router = express.Router();
 
-const {getAccounts, getAccountInfoByID, changeBlockStatus, deleteAccountByUsername} = require(`${__path_controllers}/account.controller.js`);
+const {getAccounts, getAccountInfoByID, changeBlockStatus, deleteAccountByUsername} = require(`${__path_controllers}/AdminCP/account.controller.js`);
 
 const auth = require(`${__path_middleware}/auth`);
 
