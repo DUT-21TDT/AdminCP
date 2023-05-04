@@ -1,7 +1,8 @@
 class user {
-    constructor(username, password){
+    constructor(username, password, avatarImg){
         this.username = username;
         this.password = password;
+        this.avatarImg = avatarImg;
         this.token = "";
     }
        

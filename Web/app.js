@@ -39,6 +39,11 @@ app.use(session({
   secret: 'somesecret', 
   cookie: { maxAge: 60 * 60000 }})); // 60000 is one minute
 
+app.use(function(req, res, next) {
+    res.locals.user = req.session.user;
+    next();
+  });
+
 app.use(express.json());
 
 global.__base                 = __dirname + '/';
@@ -63,7 +68,7 @@ app.use(bodyParser.urlencoded({
 // set Routers
 app.set('views', __path_views);
 app.use(ejsLayout);
-app.set('layout', './layouts/full_layout');
+app.set('layout', './layouts/full_layout', "./layouts/test_layout");
 app.set('view engine', 'ejs');
 app.use('/', express.static(path.join(__path_views, "assets")));
 app.use('/', require(__path_routes));

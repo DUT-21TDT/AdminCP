@@ -11,7 +11,7 @@ let LoginSubmitEvent = async (req, res, next) => {
     const instance = axios.create({baseURL: `${process.env.API_URL}/login`});
     
     try {
-        var data = await instance.post("/", {
+        var responseData = await instance.post("/", {
             username: username,
             password: password
         }).then(response => {
@@ -20,12 +20,17 @@ let LoginSubmitEvent = async (req, res, next) => {
             console.log({message: err});
         });
     
-        if (data.success) {
-            req.session.token = data.data;
+        if (responseData.success) {
+            req.session.token = responseData.data.token;
+            req.session.user = {
+                "username":responseData.data.username,
+                "avatarImg": responseData.data.avatarImg
+            }
+            res.redirect("/AdminCP/test");
 
-            res.status(data["status"]).send("<script> alert('"+data["message"]+"'); window.location = '/AdminCP';</script>");
+            // res.status(responseData["status"]).send("<script> alert('"+responseData["message"]+"'); window.location = '/AdminCP';</script>");
         } else {
-            res.status(data["status"]).send("<script> alert('"+data["message"]+"'); window.location = '';</script>");
+            // res.status(responseData["status"]).send("<script> alert('"+responseData["message"]+"'); window.location = '';</script>");
         }
     } catch (error) {
         res.status(500).send("<script> alert('500'); window.location = '';</script>");

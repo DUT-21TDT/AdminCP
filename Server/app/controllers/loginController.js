@@ -7,8 +7,8 @@ const controllerName = 'user';
 const MainModel = require(__path_models + controllerName);
 
 let data = [
-    new MainModel("admin", "admin"),
-    new MainModel("test123", "test123")
+    new MainModel("admin", "admin", "https://i.imgur.com/yuEqT4B.jpg"),
+    new MainModel("test123", "test123", "https://i.imgur.com/yuEqT4B.jpg")
 ]
 
 router.post("/", (req, res, next) => {
@@ -34,7 +34,7 @@ router.post("/", (req, res, next) => {
            expiresIn: "2h",
        });
     
-    var user = new MainModel(null, null, null);
+    var user = new MainModel(null, null, null, null);
 
     data.forEach(e => {
         if (e.username == username && e.password == password) {
