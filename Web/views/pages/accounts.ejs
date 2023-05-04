@@ -4,8 +4,8 @@
             <div class="card-header">            
                 <h5 class="card-title mb-0 table-title">Danh sách thành viên</h5>
                 <div class="col-sm-3" style="margin:auto; margin-right: 10px;">
-                    <input type="text" class="form-control" placeholder="Nhập tên thành viên..." aria-label="Nhập tên thành viên...">
-                  </div>
+                    <input id="txtSearch" type="text" class="form-control" placeholder="Nhập tên thành viên..." aria-label="Nhập tên thành viên...">
+                </div>
             </div>
             <div class = "table-responsive">
                 <table class="table table-hover my-0 ">
@@ -19,42 +19,8 @@
                             <th scope="col">Hành động</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <% 
-                        let count = 1;
-                        accounts.forEach(account => { %>
-                            <tr>
-                                <td scope="row"><%= count %></td>
+                    <tbody id = "trData">
 
-                                <td><%= account.fullName %></td>
-                                <% 
-                                    let blockedStatusTitle = '<span class="badge bg-success">Đang hoạt động</span>';
-                                    if (account.isBlocked) {
-                                        blockedStatusTitle = '<span class="badge bg-danger">Đã dừng hoạt động</span>';
-                                    }
-                                %>
-                                <td><%- blockedStatusTitle %> </td>
-
-                                <td><%= account.username %></td>
-                                <td><%= account.email %></td>
-                                <td>
-                                    <%
-                                        let btnBlockStatus = `<button value="${account.username}" class="btn btn-secondary btnChangeLockStatus lock" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Chặn tài khoản">
-                                        <i class="align-middle" data-feather="lock"></i></button>`
-                                        if (account.isBlocked) {
-                                            btnBlockStatus = `<button value="${account.username}" class="btn btn-secondary btnChangeLockStatus unlock" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bỏ chặn tài khoản">
-                                        <i class="align-middle" data-feather="unlock"></i></button>`
-                                        }
-                                    %>
-                                    
-                                    <%- btnBlockStatus %>
-                                    <a href="/AdminCP/Accounts/info/<%= account.accountId%>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Xem thông tin tài khoản"><i class="align-middle" data-feather="info"></i></a>
-                                    <button value="<%= account.username%>" class="btn btn-danger btnDeleteAccount" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Xóa tài khoản"><i class="align-middle" data-feather="trash-2"></i></button>
-                                </td>
-                            </tr>
-                        <%
-                            count++;
-                        }); %>
                     </tbody>
                 </table>
             </div>
@@ -62,4 +28,4 @@
     </div>
 </div>
 
-<script src="/js/pages/accounts.page.js"></script>
+<script src = "/js/pages/accounts.page.js"></script>

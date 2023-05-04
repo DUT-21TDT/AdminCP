@@ -10,15 +10,28 @@ let data = [
     new account("3", "ncnquang", "Nguyễn Cửu Nhật Quang", "ncnquang@gmail.com", "eo biet :>", "", 0, false),
 ]
 
-router.get("/", (req, res) => {
+router.get("/search", (req, res) => {
+    const keyword = req.query.keyword;
+
+    let accounts = null;
+
+    if (keyword === "") {
+        accounts = data;
+    } else {
+        accounts = []
+        data.forEach(e => {
+            if (e.fullName.includes(keyword)) accounts.push(e);
+        })
+    }
+
     res.status(200).json({
         "success": true,
         "notice": "get all accounts",
-        "data": data
+        "data": accounts
     });
 });
 
-router.get("/:id", (req, res) => {
+router.get("/info/:id", (req, res) => {
     const account = data.find(
         (data) => data.accountId === req.params.id
     );

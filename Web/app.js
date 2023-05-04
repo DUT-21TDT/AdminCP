@@ -68,7 +68,7 @@ app.use(bodyParser.urlencoded({
 // set Routers
 app.set('views', __path_views);
 app.use(ejsLayout);
-app.set('layout', './layouts/full_layout', "./layouts/test_layout");
+app.set('layout', './layouts/full_layout');
 app.set('view engine', 'ejs');
 app.use('/', express.static(path.join(__path_views, "assets")));
 app.use('/', require(__path_routes));

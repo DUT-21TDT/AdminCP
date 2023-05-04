@@ -3,29 +3,29 @@ const axios = require('axios');
 // API calling
 const instance = axios.create({baseURL: `${process.env.API_URL}/accounts`});
 
-let getAccounts = async (req, res, next) => {
+let AccountsRenderView = async (req, res, next) => {
+    res.render("pages/accounts", {
+        title: "Quản lý tài khoản",
+        name: "accounts",
+    });
+}
+
+let getAccountsWithKeyword = async (req, res, next) => {
     try {
-        let responseData = await instance.get("/").then(response => {
+        const keyword = req.query.keyword;
+        let responseData = await instance.get(`/search?keyword=${keyword}`).then(response => {
             return response.data;
         }).catch((err) => {
             console.log({message: err});
             res.send("<script> alert('500'); window.location = '/AdminCP';</script>");
         });
 
-        if (responseData.success) {
-            res.render("pages/accounts", {
-                title: "Quản lý tài khoản",
-                name: "accounts",
-                accounts: responseData.data,
-            });
-        } else {
-            console.log(responseData.message);
-            res.render("pages/accounts", {
-                title: "Quản lý tài khoản",
-                name: "accounts",
-                accounts: {},
-            });
-        }
+        res.json(
+            {
+                "success": true,
+                "data":responseData.data,
+            }    
+        );
         
     } catch (error) {
         res.status(500);
@@ -36,7 +36,7 @@ let getAccountInfoByID = async (req, res, next) => {
     const accountId = req.params.id;
 
     try {
-        let responseData = await instance.get("/" + accountId).then(response => {
+        let responseData = await instance.get("/info/" + accountId).then(response => {
             return response.data;
         }).catch((err) => {
             console.log({message: err});
@@ -126,7 +126,8 @@ let deleteAccountByUsername = async (req, res, next) => {
 };
 
 module.exports = {
-    getAccounts,
+    AccountsRenderView,
+    getAccountsWithKeyword,
     getAccountInfoByID,
     changeBlockStatus,
     deleteAccountByUsername,

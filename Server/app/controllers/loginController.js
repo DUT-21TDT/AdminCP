@@ -8,7 +8,8 @@ const MainModel = require(__path_models + controllerName);
 
 let data = [
     new MainModel("admin", "admin", "https://i.imgur.com/yuEqT4B.jpg"),
-    new MainModel("test123", "test123", "https://i.imgur.com/yuEqT4B.jpg")
+    new MainModel("test123", "test123", "https://i.imgur.com/yuEqT4B.jpg"),
+    new MainModel("Administrator", "Administrator", "https://i.imgur.com/cqF2jpp.jpeg")
 ]
 
 router.post("/", (req, res, next) => {

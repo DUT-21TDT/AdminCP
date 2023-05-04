@@ -26,11 +26,10 @@ let LoginSubmitEvent = async (req, res, next) => {
                 "username":responseData.data.username,
                 "avatarImg": responseData.data.avatarImg
             }
-            res.redirect("/AdminCP/test");
-
+            res.redirect("/AdminCP");
             // res.status(responseData["status"]).send("<script> alert('"+responseData["message"]+"'); window.location = '/AdminCP';</script>");
         } else {
-            // res.status(responseData["status"]).send("<script> alert('"+responseData["message"]+"'); window.location = '';</script>");
+            res.status(responseData["status"]).send("<script> alert('"+responseData["message"]+"'); window.location = '';</script>");
         }
     } catch (error) {
         res.status(500).send("<script> alert('500'); window.location = '';</script>");
