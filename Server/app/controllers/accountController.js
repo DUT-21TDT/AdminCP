@@ -20,7 +20,7 @@ router.get("/search", (req, res) => {
     } else {
         accounts = []
         data.forEach(e => {
-            if (e.fullName.includes(keyword)) accounts.push(e);
+            if (e.fullName.includes(keyword))accounts.push(e);
         })
     }
 

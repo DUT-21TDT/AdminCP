@@ -4,9 +4,12 @@
 }
 
 .avatar-view{
-    width: 250px;
-    height: 250px;
+    width: 350px;
+    height: 350px;
     border: 10px solid #ffffff;
+}
+div.avatar-comp{
+    justify-content: center;
 }
 
 @media screen and (max-width: 800px) {

@@ -1,4 +1,4 @@
-const DataShow2Table = async (keyword)=> {
+const DataShow2Table = async (keyword="")=> {
 
     let res = await $.ajax({
             url: `/AdminCP/Accounts/search?keyword=${keyword}`,
@@ -120,7 +120,7 @@ const DataShow2Table = async (keyword)=> {
 }
 
 $("#trData").ready(()=> {
-    DataShow2Table("");
+    DataShow2Table();
 });
 
 $("#txtSearch").keyup(()=> {
