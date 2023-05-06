@@ -1,3 +1,28 @@
+const addDeleteBtnEvent = function () {
+    const foodId = $(this).val();
+    let msg = `Bạn có muốn xóa thông tin thực phẩm có foodId = [${foodId}] không!`;
+    if (confirm(msg)) {
+        $.ajax({
+            url: `/AdminCP/Foods/delete/${foodId}`,
+            type: "DELETE", // <- Change here
+            contentType: "application/json",
+            success: function (response) {
+                if (response.success) {
+                    alert(response.notice);
+                    window.location = "/AdminCP/Foods";
+                }else {
+                    alert("Có lỗi xảy ra!\n" + response.notice);
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    };
+}
+
+
+
 const DataShow2Table = async (keyword="")=> {
     let res = await $.ajax({
         url: `/AdminCP/Foods/search?keyword=${keyword}`,
@@ -25,7 +50,7 @@ const DataShow2Table = async (keyword="")=> {
         
         trHtml += `
         <td>
-            <a href="/AdminCP/Foods/edit/${food.foodId}" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Chỉnh sửa thông tin thực phẩm">
+            <a href="/AdminCP/Foods/edit/${food.foodId}" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Chỉnh sửa thông tin thực phẩm">
             
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
   <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -53,33 +78,12 @@ const DataShow2Table = async (keyword="")=> {
         await $("#trData").append(trHtml);
     });
 
-    $(".btnDeleteFood").click(function () {
-        const foodId = $(this).val();
-        let msg = `Bạn có muốn xóa thông tin thực phẩm có foodId = [${foodId}] không!`;
-        if (confirm(msg)) {
-            $.ajax({
-                url: `/AdminCP/Foods/delete/${foodId}`,
-                type: "DELETE", // <- Change here
-                contentType: "application/json",
-                success: function (response) {
-                    if (response.success) {
-                        alert(response.notice);
-                        window.location = "";
-                    }else {
-                        alert("Có lỗi xảy ra!\n" + response.notice);
-                    }
-                },
-                error: function (err) {
-                    console.log(err);
-                }
-            });
-        }
-    });
+    $(".btnDeleteFood").click(addDeleteBtnEvent);
 };
 
-$("#trData").ready(()=> {
-    DataShow2Table();
-});
+$("#trData").ready(
+    DataShow2Table()
+);
 
 $("#txtSearch").keyup(
     delay(()=> {

@@ -93,7 +93,6 @@ let changeBlockStatus = async (req, res, next) => {
                 {
                     "success":true,
                     "notice": responseData.notice,
-                    "data": username 
                 }
             );
         } else {
@@ -101,7 +100,6 @@ let changeBlockStatus = async (req, res, next) => {
                 {
                     "success":false,
                     "notice": responseData.notice,
-                    "data": username 
                 }
             );
         }

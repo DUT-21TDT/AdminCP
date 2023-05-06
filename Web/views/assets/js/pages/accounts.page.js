@@ -119,9 +119,10 @@ const DataShow2Table = async (keyword="")=> {
     });
 }
 
-$("#trData").ready(()=> {
-    DataShow2Table();
-});
+$("#trData").ready(
+        DataShow2Table()
+);
+
 
 $("#txtSearch").keyup(
     delay(()=> {

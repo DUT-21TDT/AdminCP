@@ -12,10 +12,34 @@
         Minerals = null, // string
 
 %>
+
+<%
+    let foodId = "";
+    let foodName = "";
+    let foodImage = "";
+    let Energy = "";
+    let Carbohydrate = "";
+    let Lipid = "";
+    let Protein = "";
+    let Vitamins = "";
+    let Minerals = "";
+    if (food) {
+        foodId = food.foodId;
+        foodName = food.foodName;
+        foodImage = food.foodImage;
+        
+        Energy = food.Energy;
+        Carbohydrate = food.Carbohydrate;
+        Lipid = food.Lipid;
+        Protein = food.Protein;
+        Vitamins = food.Vitamins;
+        Minerals = food.Minerals;
+    }
+%>
 <div class="row">
         <div class="mb">
             <label for="txtFoodName" class="form-label">Tên thực phẩm</label>
-            <input type="text" class="form-control" id="txtFoodName" placeholder="Vui lòng nhập tên thực phẩm..." required>
+            <input type="text" class="form-control" id="txtFoodName" placeholder="Vui lòng nhập tên thực phẩm..." value="<%= foodName %>" required>
         </div>
 </div>
 
@@ -25,34 +49,37 @@
     <div class="col">
         <div class="mb-3">
             <label for="txtEnergy" class="form-label">Energy (Năng lượng) - Đơn vị: Calo</label>
-            <input type="number" class="form-control" id="txtEnergy" placeholder="Vui lòng nhập lượng năng lượng của thực phẩm..." min="0" step="0.1" required>
+            <input type="number" class="form-control" id="txtEnergy" placeholder="Vui lòng nhập lượng năng lượng của thực phẩm..." min="0" step="0.1" value = "<%= Energy %>" required>
         </div>
         <div class="mb-3">
             <label for="txtCarbohydrate" class="form-label">Carbohydrate - Đơn vị: gram</label>
-            <input type="number" class="form-control" id="txtCarbohydrate" placeholder="Vui lòng nhập lượng Carbohydrate của thực phẩm..." min="0" step="0.1" required>
+            <input type="number" class="form-control" id="txtCarbohydrate" placeholder="Vui lòng nhập lượng Carbohydrate của thực phẩm..." min="0" step="0.1" value = "<%= Carbohydrate %>" required>
         </div>
         <div class="mb-3">
             <label for="txtLipid" class="form-label">Lipid - Đơn vị: gram</label>
-            <input type="number" class="form-control" id="txtLipid" placeholder="Vui lòng nhập lượng Lipid của thực phẩm..." min="0" step="0.1" required>
+            <input type="number" class="form-control" id="txtLipid" placeholder="Vui lòng nhập lượng Lipid của thực phẩm..." min="0" step="0.1"  value = "<%= Lipid %>" required>
         </div>
         <div class="mb-3">
             <label for="txtProtein" class="form-label">Protein - Đơn vị: gram</label>
-            <input type="number" class="form-control" id="txtProtein" placeholder="Vui lòng nhập lượng Protein của thực phẩm..." min="0" step="0.1" required>
+            <input type="number" class="form-control" id="txtProtein" placeholder="Vui lòng nhập lượng Protein của thực phẩm..." min="0" step="0.1" value = "<%= Protein %>" required>
         </div>
         <div class="mb-3">
             <label for="txtVitamins" class="form-label">Vitamins</label>
-            <input type="text" class="form-control" id="txtVitamins" placeholder="Vui lòng nhập các Vitamin có trong thực phẩm (vd: C, B2,...)" required>
+            <input type="text" class="form-control" id="txtVitamins" placeholder="Vui lòng nhập các Vitamin có trong thực phẩm (vd: C, B2,...)" value = "<%= Vitamins %>" required>
         </div>
         <div class="mb-3">
             <label for="txtMinerals" class="form-label">Minerals (Khoáng chất)</label>
-            <input type="text" class="form-control" id="txtMinerals" placeholder="Vui lòng nhập các khoáng chất có trong thực phẩm (vd: Sắt, kẽm, selen, mangan, đồng, i-ốt, cobalt và floura)" required>
+            <input type="text" class="form-control" id="txtMinerals" placeholder="Vui lòng nhập các khoáng chất có trong thực phẩm (vd: Sắt, kẽm, selen, mangan, đồng, i-ốt, cobalt và floura)" value = "<%= Minerals %>" required>
         </div>
     </div>
 
     <div class="col">
         <div class="col avatar-comp">
             <center>
-                <img id = "foodImage" src = "/img/default/no-image-food.png" class="rounded mx-auto d-block avatar-view" alt = "Hình ảnh thực phẩm">
+                <%
+                    if (foodImage==="") foodImage = "/img/default/no-image-food.png";
+                %>
+                <img id = "foodImage" src = "<%= foodImage %>" class="rounded mx-auto d-block avatar-view" alt = "Hình ảnh thực phẩm">
                 <p id="foodImageNotice"></p>
                 <button id="changeFoodImg" class = "btn btn-success btn-sm">Thay đổi hình ảnh thực phẩm</button>
             </center>
@@ -61,12 +88,25 @@
 </div>
 
 <div class = "flex">
-    <button id="submit" class = "btn btn-success">
+    <% if (foodId === ""){ %>
+        <button id="submit" class = "btn btn-success">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
           </svg>  
         
         Thêm thông tin thực phẩm</button>
+    <%} else { %>
+
+        <a id="submit" class = "btn btn-success" value = "<%= foodId %>">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+    </svg>
+
+        Cập nhật thông tin thực phẩm</a>
+
+    <% } %>
+    
 </div>
 
 <script>
@@ -107,10 +147,10 @@ var onFileSelected = async function(e){
     });
 };
 
-$('#submit').on('click', () => {
+$('#submit').on('click', delay(() => {
+    const foodId = "<%= foodId %>";
     // get params from form
     const txtFoodName = $("#txtFoodName").val();
-
     if (txtFoodName.length < 3){
         alert("Vui lòng nhập tên thực phẩm");
         return;
@@ -137,12 +177,28 @@ $('#submit').on('click', () => {
         }
     }
 
-    $.post(`/AdminCP/Foods/add`,data, (data, status) => {
-        console.log(data, status);
-    }).fail((err) => {
-        alert(err);
-    });
-});
+    if (foodId==="") {
+        $.post(`/AdminCP/Foods/add`,data, (response, status) => {
+            alert(response.notice);
+            if (response.success) {
+                window.location = "/AdminCP/Foods";
+            } 
+        }).fail((err) => {
+            alert(err);
+        });
+    } else {
+        $.ajax({
+            url: `/AdminCP/Foods/update/${foodId}`,
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(data), // access in body
+        }).done(function (response) {
+            alert(response.notice);   
+            window.location = "/AdminCP/Foods";
+        }).fail(function (err) {
+            alert(err);
+        })
+    }
+}, 3));
 
 </script>
-

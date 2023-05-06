@@ -3,13 +3,13 @@ class food{
         foodId, // string
         foodName, // string
         foodImage, // string
-        latestUpdate = new Date().toLocaleString(), // string
         Energy = null, // float
         Carbohydrate = null, // float
         Lipid = null, // float
         Protein = null, // float
         Vitamins = null, // string
         Minerals = null, // string
+        latestUpdate = new Date().toLocaleString(), // string
     ){
         this.foodId = foodId;
         this.foodName = foodName;
