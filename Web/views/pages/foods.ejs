@@ -7,7 +7,7 @@
                 </div>
                 
                 <div class="col-sm-3" style="margin:auto; margin-right: 10px;">
-                    <input type="text" class="form-control" placeholder="Nhập tên thực phẩm..." aria-label="Nhập tên thực phẩm...">
+                    <input id="txtSearch" type="text" class="form-control" placeholder="Nhập tên thực phẩm..." aria-label="Nhập tên thực phẩm...">
                   </div>
             </div>
             <div class = "table-responsive">
@@ -20,24 +20,8 @@
                             <th scope="col">Hành động</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <% 
-                        let count = 1;
-                        foods.forEach(food => { %>
-                            <tr>
-                                <td scope="row"><%= count %></td>
-
-                                <td><%= food.foodName %></td>
-                                <td><%- food.latestUpdate %> </td>
-                                <td>
-                                    <a href="/AdminCP/Foods/edit/<%= food.foodId%>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Chỉnh sửa thông tin thực phẩm"><i class="align-middle" data-feather="edit"></i></a>
-                                    <a href="/AdminCP/Foods/info/<%= food.foodId%>" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Xem thông tin thực phẩm"><i class="align-middle" data-feather="info"></i></a>
-                                    <button value="<%= food.foodId%>" class="btn btn-danger btnDeletefood" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Xóa thực phẩm"><i class="align-middle" data-feather="trash-2"></i></button>
-                                </td>
-                            </tr>
-                        <%
-                            count++;
-                        }); %>
+                    <tbody id="trData">
+                        
                     </tbody>
                 </table>
             </div>
@@ -78,4 +62,4 @@
 }
 </style>
 
-<!--<script src="/js/pages/foods.page.js"></script> -->
+<script src="/js/pages/foods.page.js"></script>

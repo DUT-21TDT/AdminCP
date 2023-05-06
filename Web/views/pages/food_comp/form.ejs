@@ -40,12 +40,12 @@
             <input type="number" class="form-control" id="txtProtein" placeholder="Vui lòng nhập lượng Protein của thực phẩm..." min="0" step="0.1" required>
         </div>
         <div class="mb-3">
-            <label for="txtProtein" class="form-label">Vitamins</label>
-            <input type="text" class="form-control" id="txtProtein" placeholder="Vui lòng nhập các Vitamin có trong thực phẩm (vd: C, B2,...)" required>
+            <label for="txtVitamins" class="form-label">Vitamins</label>
+            <input type="text" class="form-control" id="txtVitamins" placeholder="Vui lòng nhập các Vitamin có trong thực phẩm (vd: C, B2,...)" required>
         </div>
         <div class="mb-3">
-            <label for="txtProtein" class="form-label">Minerals (Khoáng chất)</label>
-            <input type="text" class="form-control" id="txtProtein" placeholder="Vui lòng nhập các khoáng chất có trong thực phẩm (vd: Sắt, kẽm, selen, mangan, đồng, i-ốt, cobalt và floura)" required>
+            <label for="txtMinerals" class="form-label">Minerals (Khoáng chất)</label>
+            <input type="text" class="form-control" id="txtMinerals" placeholder="Vui lòng nhập các khoáng chất có trong thực phẩm (vd: Sắt, kẽm, selen, mangan, đồng, i-ốt, cobalt và floura)" required>
         </div>
     </div>
 
@@ -61,7 +61,7 @@
 </div>
 
 <div class = "flex">
-    <button class = "btn btn-success">
+    <button id="submit" class = "btn btn-success">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
           </svg>  
@@ -107,6 +107,42 @@ var onFileSelected = async function(e){
     });
 };
 
+$('#submit').on('click', () => {
+    // get params from form
+    const txtFoodName = $("#txtFoodName").val();
+
+    if (txtFoodName.length < 3){
+        alert("Vui lòng nhập tên thực phẩm");
+        return;
+    }
+
+    const txtEnergy = $("#txtEnergy").val();
+    const txtCarbohydrate = $("#txtCarbohydrate").val();
+    const txtLipid = $("#txtLipid").val();
+    const txtProtein = $("#txtProtein").val();
+    const txtVitamins = $("#txtVitamins").val();
+    const txtMinerals = $("#txtMinerals").val();
+    const foodImage = document.getElementById("foodImage").src;
+
+    const data = {
+        "foodName":txtFoodName,
+        "foodImage":foodImage,
+        "nutrition": {
+            "energy":txtEnergy,
+            "carbohydrate": txtCarbohydrate,
+            "lipid": txtLipid,
+            "protein": txtProtein,
+            "vitamins": txtVitamins,
+            "minerals": txtMinerals,
+        }
+    }
+
+    $.post(`/AdminCP/Foods/add`,data, (data, status) => {
+        console.log(data, status);
+    }).fail((err) => {
+        alert(err);
+    });
+});
 
 </script>
 

@@ -123,7 +123,10 @@ $("#trData").ready(()=> {
     DataShow2Table();
 });
 
-$("#txtSearch").keyup(()=> {
-    let text = document.getElementById("txtSearch").value;
-    DataShow2Table(text);
-});
+$("#txtSearch").keyup(
+    delay(()=> {
+        let text = document.getElementById("txtSearch").value;
+        text = text.toLowerCase();
+        DataShow2Table(text);
+    }, 10)
+);

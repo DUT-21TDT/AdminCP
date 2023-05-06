@@ -10,6 +10,15 @@ let data = [
     new account("3", "ncnquang", "Nguyễn Cửu Nhật Quang", "ncnquang@gmail.com", "eo biet :>", "", 0, false),
 ]
 
+router.get("/", (req, res) => {
+    res.status(200).json({
+        "success": true,
+        "notice": "get all accounts",
+        "data": data
+    });
+});
+
+
 router.get("/search", (req, res) => {
     const keyword = req.query.keyword;
 

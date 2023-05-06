@@ -3,7 +3,7 @@ const axios = require('axios');
 // API calling
 const instance = axios.create({baseURL: `${process.env.API_URL}/accounts`});
 
-let AccountsRenderView = async (req, res, next) => {
+let renderAccountsPageView = async (req, res, next) => {
     res.render("pages/accounts", {
         title: "Quản lý tài khoản",
         name: "accounts",
@@ -13,19 +13,37 @@ let AccountsRenderView = async (req, res, next) => {
 let getAccountsWithKeyword = async (req, res, next) => {
     try {
         const keyword = req.query.keyword;
-        let responseData = await instance.get(`/search?keyword=${keyword}`).then(response => {
+
+        let responseData = await instance.get("/").then(response => {
             return response.data;
         }).catch((err) => {
             console.log({message: err});
-            res.send("<script> alert('500'); window.location = '/AdminCP';</script>");
+            throw err;
         });
 
-        res.json(
-            {
-                "success": true,
-                "data":responseData.data,
-            }    
-        );
+        if (responseData.success) {
+
+            let accounts = [];
+
+            responseData.data.forEach(e => {
+                if (e.fullName.toLowerCase().includes(keyword)) 
+                {
+                    accounts.push(e);
+                }
+            });
+
+            res.status(200).json({
+                "success":true,
+                "data":accounts,
+            });
+            
+        } else {
+            res.status(404).json({
+                "success":false,
+                "notice": "empty",
+                "data":[],
+            });
+        }
         
     } catch (error) {
         res.status(500);
@@ -126,7 +144,7 @@ let deleteAccountByUsername = async (req, res, next) => {
 };
 
 module.exports = {
-    AccountsRenderView,
+    renderAccountsPageView,
     getAccountsWithKeyword,
     getAccountInfoByID,
     changeBlockStatus,

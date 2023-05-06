@@ -1,11 +1,11 @@
 let express = require('express');
 let router = express.Router();
 
-const {AccountsRenderView, getAccountsWithKeyword, getAccountInfoByID, changeBlockStatus, deleteAccountByUsername} = require(`${__path_controllers}/AdminCP/account.controller.js`);
+const {renderAccountsPageView, getAccountsWithKeyword, getAccountInfoByID, changeBlockStatus, deleteAccountByUsername} = require(`${__path_controllers}/AdminCP/account.controller.js`);
 
 const auth = require(`${__path_middleware}/auth`);
 
-router.get("/", auth, AccountsRenderView);
+router.get("/", auth, renderAccountsPageView);
 
 router.get("/search", auth, getAccountsWithKeyword);
 
