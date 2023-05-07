@@ -1,12 +1,14 @@
 const axios = require('axios');
 
+const controllerName = "accounts";
+
 // API calling
-const instance = axios.create({baseURL: `${process.env.API_URL}/accounts`});
+const instance = axios.create({baseURL: `${process.env.API_URL}/${controllerName}`});
 
 let renderAccountsPageView = async (req, res, next) => {
     res.render("pages/accounts", {
         title: "Quản lý tài khoản",
-        name: "accounts",
+        name: controllerName,
     });
 }
 
@@ -63,13 +65,13 @@ let getAccountInfoByID = async (req, res, next) => {
         if (responseData.success) {
             res.render("pages/account_comp/info", {
                 title: "Thông tin tài khoản: " +  accountId,
-                name: "accounts",
+                name: controllerName,
                 accountInfo: responseData.data,
             });
         } else {
             res.render("pages/account_comp/info", {
                 title: "Thông tin tài khoản: " +  accountId,
-                name: "accounts",
+                name: controllerName,
                 data: null,
             });
         }

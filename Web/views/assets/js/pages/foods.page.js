@@ -79,6 +79,8 @@ const DataShow2Table = async (keyword="")=> {
     });
 
     $(".btnDeleteFood").click(addDeleteBtnEvent);
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 };
 
 $("#trData").ready(
