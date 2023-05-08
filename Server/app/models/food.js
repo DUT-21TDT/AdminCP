@@ -7,8 +7,8 @@ class food{
         Carbohydrate = null, // float
         Lipid = null, // float
         Protein = null, // float
-        Vitamins = null, // string
-        Minerals = null, // string
+        Vitamins = "", // string
+        Minerals = "", // string
         latestUpdate = new Date().toLocaleString(), // string
     ){
         this.foodId = foodId;

@@ -56,6 +56,7 @@ global.__path_middleware      = __path_app + pathConfig.folder_middleware + '/';
 global.__folder_validates     = __path_app + pathConfig.folder_validates + '/';
 global.__folder_schemas       = __path_app + pathConfig.folder_schemas + '/';
 global.__path_views           = __path_app + pathConfig.folder_views + '/';
+global.__path_utils           = __path_app + pathConfig.folder_utils + '/';
 
 // set configuration value of bodyParser
 const bParserConfig = require(__path_configs + "bodyParserConfig.js");

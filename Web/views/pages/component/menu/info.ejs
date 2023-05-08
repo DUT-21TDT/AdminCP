@@ -1,0 +1,220 @@
+<div class="row">
+    <div class="mb">
+        <label for="txtMenu" class="form-label">Tên thực đơn</label>
+        <input type="text" class="form-control" id="txtMenu" placeholder="Vui lòng nhập tên thực đơn..." value="<%= menu.menuName %>" disabled>
+    </div>
+</div>
+
+<br>
+
+<div class = "row">
+    <div class="col">
+        <div class = "row">
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                            <div class="col mt-0">
+                                <p class="card-title">Energy</p>
+                            </div>
+                        <span class="mt-1 mb-3" id="txtEnergy">200 Calo</span>
+                    </div>  
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                            <div class="col mt-0">
+                                <p class="card-title">Carbohydrate</p>
+                            </div>
+                        <span class="mt-1 mb-3" id="txtCarbohydrate">200 g</span>
+                    </div>  
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                            <div class="col mt-0">
+                                <p class="card-title">Lipid</p>
+                            </div>
+                        <span class="mt-1 mb-3" id = "txtLipid">200 g</span>
+                    </div>  
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                            <div class="col mt-0">
+                                <p class="card-title">Protein</p>
+                            </div>
+                        <span class="mt-1 mb-3" id = "txtProtein">200 g</span>
+                    </div>  
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                            <div class="col mt-0">
+                                <p class="card-title">Vitamins</p>
+                            </div>
+                        <span class="mt-1 mb-3" id = "txtVitamins">A,B,C</span>
+                    </div>  
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                            <div class="col mt-0">
+                                <p class="card-title">Minerals</p>
+                            </div>
+                        <span class="mt-1 mb-3" id = "txtMinerals">Sắt</span>
+                    </div>  
+                </div>
+            </div>
+        </div>
+
+        <div class="flex">
+            <div class="card">
+                <div class = "table-responsive-sm">
+                    <table class="table table-hover my-0 ">
+                        <thead>
+                            <tr>
+                                <th scope="col" class ="w-75">Tên thực phẩm</th>
+                                <th scope="col" style="text-align: center; width: 10%;" >Số lượng</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataFood">
+                        </tbody>
+                    </table>
+                </div>           
+            </div>
+            
+
+        </div>
+    </div>
+
+
+
+    <div class="col">
+        <%
+            if (menu.menuImage==="") 
+                menu.menuImage = "/img/default/no-image-food.png";
+        %>
+        <img id = "menuImage" src = "<%= menu.menuImage %>" class="rounded mx-auto d-block avatar-view" alt = "Hình ảnh thực đơn">
+    </div>
+</div>
+
+<div class="flex">
+    
+</div>
+
+<br>
+<a id="btnBack" href="#" style="color: green;"><i class="align-middle" data-feather="arrow-left"></i> Trở lại </a>
+<script>
+$("#btnBack").click(function(){
+    history.back();
+});
+</script>
+
+<%
+    let foodIds = "[";
+    menu.foods.forEach(e => {
+        foodIds +=  `{"foodId":"${e.foodId}", "amount": ${e.amount}},`;
+    });
+    foodIds += "]";
+%>
+
+<script>
+
+async function getFoodInfoByFoodId(foodId) {
+    let res = await $.get(`/AdminCP/Foods/get/${foodId}`).done((response)=> {
+        // console.log(response);
+        if (response.success){
+            return response.data;
+        } else {
+            return null;
+        }
+    }).fail((err) =>{
+        console.log(err);
+    })
+
+    return res;
+}
+
+let curValue = {
+    "Energy":0,
+    "Carbohydrate":0,
+    "Lipid":0,
+    "Protein":0,
+    "Vitamins":"",
+    "Minerals":"",
+}
+
+function removeDuplicates(arr) {
+    return arr.filter((item,
+        index) => arr.indexOf(item) === index);
+}
+
+function uniqueString(text){
+    var li = removeDuplicates(text.replace(", ", ",").split(","));
+    let res = "";
+    for (let idx = 0; idx < li.length; idx++) {
+        res += `${li[idx]},`;
+    }
+    return res;
+}
+
+function printListString(text){
+    
+    return text.slice(0, -1);
+}
+
+function updateTotalNutritionValue(dataFood, amount){
+
+    // nutrition
+    curValue.Energy += text2float(dataFood.Energy) * amount;
+    curValue.Carbohydrate += text2float(dataFood.Carbohydrate) * amount;
+    curValue.Lipid += text2float(dataFood.Lipid) * amount;
+    curValue.Protein += text2float(dataFood.Protein) * amount;
+    curValue.Vitamins = uniqueString(curValue.Vitamins + dataFood.Vitamins);
+    curValue.Minerals = uniqueString(curValue.Minerals + dataFood.Minerals);
+
+    // update nutrition value
+    $("#txtEnergy").text(`${curValue.Energy.toFixed(2)} Calo`);
+    $("#txtCarbohydrate").text(`${curValue.Carbohydrate.toFixed(2)} g`);
+    $("#txtLipid").text(`${curValue.Lipid.toFixed(2)} g`);
+    $("#txtProtein").text(`${curValue.Protein.toFixed(2)} g`);
+    $("#txtVitamins").text(`${printListString(curValue.Vitamins)}`);
+    $("#txtMinerals").text(`${printListString(curValue.Minerals)}`);
+
+    // console.log(Energy, Carbohydrate, Lipid, Protein, Vitamins, Minerals);
+
+}
+
+$(document).ready(async ()=> {
+
+    $("#dataFood").empty();
+
+    const foodIds = <%- foodIds%>;
+
+    for (let idx = 0; idx < foodIds.length; idx++) {
+        const {foodId, amount} = foodIds[idx];
+        const food = await getFoodInfoByFoodId(foodId);
+
+
+
+
+        // render to HTML
+        const trHTML = `<tr>
+                            <td><a href="#" style="color:black;">${food.data.foodName}</a></td>
+                            <td style="text-align: center;">${amount}</td>
+                        </tr>`;
+        $("#dataFood").append(trHTML);
+        
+        // console.log(food.data, amount);
+
+        updateTotalNutritionValue(food.data, amount);
+    }
+
+});
+
+</script>

@@ -8,4 +8,5 @@ module.exports = {
     folder_controllers : 'controllers',
     folder_middleware : 'middleware',
     folder_views: 'views',
+    folder_utils: "utils"
 };

@@ -22,22 +22,23 @@ router.get("/", (req, res) => {
 
 router.get("/info/:foodId", (req, res) => {
 
-    data.forEach(e => {
-        if (e.foodId === req.params.foodId) 
-        {
-            res.status(200).json({
-                "success": true,
-                "notice": `get information about [${e.foodName}] successfully.`,
-                "data": e
-            });
-        }
-    });
+    const foodInfo = data.find(
+        (e) => e.foodId === req.params.foodId
+    );
 
-    res.status(404).json({
-        "success": false,
-        "notice":  "Don't find the food by Id = " + req.params.foodId,
-        "data": e
-    });
+    if (foodInfo){
+        res.status(200).json({
+            "success": true,
+            "notice": `get information about [${foodInfo.foodName}] successfully.`,
+            "data": foodInfo
+        });    
+    } else {
+        res.status(404).json({
+            "success": false,
+            "notice":  "Don't find the food by Id = " + req.params.foodId,
+            "data": null
+        });
+    }
 });
 
 router.post("/add", (req, res) => {
@@ -112,7 +113,7 @@ router.delete("/delete/:foodId", (req, res) => {
     {
         res.status(404).json({
             "success": false,
-            "notice": "Don't find the account by Id = " + foodId,
+            "notice": "Don't find the food by Id = " + foodId,
         });
     }else {
         let index = data.indexOf(foodInfo);

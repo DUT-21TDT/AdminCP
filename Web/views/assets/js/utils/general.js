@@ -8,3 +8,7 @@ function delay(callback, ms) {
       }, ms || 0);
     };
   }
+
+const text2float = (text) => {
+  return parseFloat(text) ? parseFloat(text) : null; 
+};

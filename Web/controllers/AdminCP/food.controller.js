@@ -1,10 +1,12 @@
 const axios = require('axios');
+const {text2float} = require(__path_utils + 'general.js');
 
 const controllerName = "foods";
 
 // API calling
 const instance = axios.create({baseURL: `${process.env.API_URL}/${controllerName}`});
 
+// [GET] /Foods/
 const renderFoodsPageView = async(req, res, next) => {
     res.render("pages/foods", {
         title: "Quản lý thực phẩm",
@@ -12,6 +14,7 @@ const renderFoodsPageView = async(req, res, next) => {
     });
 }
 
+// [GET] /Foods?search
 let getFoodsWithKeyword = async (req, res, next) => {
     try {
         const keyword = req.query.keyword;
@@ -52,19 +55,16 @@ let getFoodsWithKeyword = async (req, res, next) => {
     }
 };
 
+// [GET] /Foods/add
 const addFoodPage = (req, res, next) => {
-    res.render("pages/food_comp/form", {
+    res.render("pages/component/food/form", {
         title: "Thêm thông tin thực phẩm",
         name: controllerName,
         food: null,
     });
 }
 
-
-const text2float = (text) => {
-    return parseFloat(text) ? parseFloat(text) : null; 
-};
-
+// [POST] /Foods/add
 const submitAddFood = async (req, res, next) => {
     try {
         const foodId = req.params.foodId;
@@ -102,26 +102,34 @@ const submitAddFood = async (req, res, next) => {
 };
 
 
+// [FUNCTION]
+const getFoodInfoByFoodId = async (foodId) => {
+    let res = await instance.get(`/info/${foodId}`).then(response => {
+        return response.data;
+    }).catch((err) => {
+        console.log({message: err});
+        return null;
+    });
+
+    return res;
+}
+
+// [GET] /Foods/:foodId 
+const getFoodByFoodId = async (req, res, next) => {
+    const foodId = req.params.foodId;
+    const responseData = await getFoodInfoByFoodId(foodId);
+    res.send(responseData); 
+}
+
+// [GET] /Foods/info/:foodId 
 // view info
 const viewFoodInfoByFoodId = async (req, res, next) => {
     try {
         const foodId = req.params.foodId;
-
-        let responseData = await instance.get(`/info/${foodId}`).then(response => {
-            return response.data;
-        }).catch((err) => {
-            console.log({message: err});
-            res.status(500).sendFile(__path_views + '/statics/500.html');
-        });
-
+        const responseData = await getFoodInfoByFoodId(foodId);
         if (responseData.success) {
             let food = responseData.data;
-            // res.status(200).json({
-            //     "success":true,
-            //     "food":food,
-            // });
-
-            res.render("pages/food_comp/info", {
+            res.render("pages/component/food/info", {
                 title: `Xem thông tin thực phẩm: ${foodId}`,
                 name: controllerName,
                 food: food,
@@ -138,25 +146,15 @@ const viewFoodInfoByFoodId = async (req, res, next) => {
 
 
 // edit
+// [GET] /Foods/edit/:foodId
 const renderFoodEditPage = async (req, res, next) => {
     try {
         const foodId = req.params.foodId;
-
-        let responseData = await instance.get(`/info/${foodId}`).then(response => {
-            return response.data;
-        }).catch((err) => {
-            console.log({message: err});
-            res.status(500).sendFile(__path_views + '/statics/500.html');
-        });
+        const responseData = await getFoodInfoByFoodId(foodId);
 
         if (responseData.success) {
             let food = responseData.data;
-            // res.status(200).json({
-            //     "success":true,
-            //     "food":food,
-            // });
-
-            res.render("pages/food_comp/form", {
+            res.render("pages/component/food/form", {
                 title: `Chỉnh sửa thông tin thực phẩm: ${foodId}`,
                 name: controllerName,
                 food: food,
@@ -171,6 +169,7 @@ const renderFoodEditPage = async (req, res, next) => {
     }
 }
 
+// [PUT] /Foods/update/:foodId
 const updateFoodInfo = async (req, res, next) => {
 
     const notice = {
@@ -229,6 +228,7 @@ const updateFoodInfo = async (req, res, next) => {
 }
 
 // delete
+// [DELETE] /Foods/delete/:foodId
 const deleteFoodByFoodId = async (req, res, next) => {
     let foodId = req.params.foodId;
 
@@ -261,7 +261,9 @@ const deleteFoodByFoodId = async (req, res, next) => {
 
 module.exports = {
     renderFoodsPageView,
+    getFoodByFoodId,
     getFoodsWithKeyword,
+
     addFoodPage,
     submitAddFood,
     viewFoodInfoByFoodId,

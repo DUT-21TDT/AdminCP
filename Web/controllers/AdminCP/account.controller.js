@@ -63,13 +63,13 @@ let getAccountInfoByID = async (req, res, next) => {
             res.send("<script> alert('Do not find accountId = "+accountId+"'); window.location = '/AdminCP/Accounts';</script>");
         });
         if (responseData.success) {
-            res.render("pages/account_comp/info", {
+            res.render("pages/component/account/info", {
                 title: "Thông tin tài khoản: " +  accountId,
                 name: controllerName,
                 accountInfo: responseData.data,
             });
         } else {
-            res.render("pages/account_comp/info", {
+            res.render("pages/component/account/info", {
                 title: "Thông tin tài khoản: " +  accountId,
                 name: controllerName,
                 data: null,

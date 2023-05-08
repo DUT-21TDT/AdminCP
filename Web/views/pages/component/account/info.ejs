@@ -64,5 +64,10 @@
         </div>
 </div>
 <br>
-<a href="/AdminCP/Accounts" style="color: green;"><i class="align-middle" data-feather="arrow-left"></i> Trở lại trang quản lý</a>
+<a id="btnBack" href="#" style="color: green;"><i class="align-middle" data-feather="arrow-left"></i> Trở lại </a>
 <script src="/js/pages/accounts.page.js"></script>
+<script>
+$("#btnBack").click(function(){
+    history.back();
+});
+</script>

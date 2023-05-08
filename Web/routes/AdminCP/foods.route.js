@@ -5,8 +5,9 @@ const auth = require(`${__path_middleware}/auth`);
 
 const {
     renderFoodsPageView,
+    getFoodByFoodId,
     getFoodsWithKeyword,
-    
+
     addFoodPage,
     submitAddFood,
 
@@ -20,6 +21,7 @@ const {
 
 // management
 router.get("/", auth, renderFoodsPageView);
+router.get("/get/:foodId", auth, getFoodByFoodId);
 router.get("/search", auth, getFoodsWithKeyword);
 // add
 router.get("/add",auth, addFoodPage);

@@ -82,5 +82,10 @@
     </button>
 </div>
 <br>
-<a href="/AdminCP/Foods" style="color: green;"><i class="align-middle" data-feather="arrow-left"></i> Trở lại trang quản lý</a>
+<a id="btnBack" href="#" style="color: green;"><i class="align-middle" data-feather="arrow-left"></i> Trở lại </a>
+<script>
+$("#btnBack").click(function(){
+    history.back();
+});
+</script>
 <script src = "/js/pages/foods.page.js"></script>
