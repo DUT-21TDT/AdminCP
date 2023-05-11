@@ -4,7 +4,7 @@ const {text2float} = require(__path_utils + 'general.js');
 const controllerName = "foods";
 
 // API calling
-const instance = axios.create({baseURL: `${process.env.API_URL}/${controllerName}`});
+const instance = axios.create({baseURL: `${process.env.API_URL}/admin-access/${controllerName}`});
 
 // [GET] /Foods/
 const renderFoodsPageView = async(req, res, next) => {
@@ -19,7 +19,13 @@ let getFoodsWithKeyword = async (req, res, next) => {
     try {
         const keyword = req.query.keyword;
 
-        let responseData = await instance.get("/").then(response => {
+        let responseData = await instance.get("/", 
+        {
+            headers: {
+                Cookie: `token=${req.session.token}` 
+            }
+        }
+        ).then(response => {
             return response.data;
         }).catch((err) => {
             console.log({message: err});
@@ -30,7 +36,7 @@ let getFoodsWithKeyword = async (req, res, next) => {
             
             let foods = [];
 
-            responseData.data.forEach(e => {
+            responseData.data.list.forEach(e => {
                 if (e.foodName.toLowerCase().includes(keyword)) 
                 {
                     foods.push(e);
@@ -51,6 +57,7 @@ let getFoodsWithKeyword = async (req, res, next) => {
         }
         
     } catch (error) {
+        console.log({message: error})
         res.status(500);
     }
 };
@@ -67,7 +74,7 @@ const addFoodPage = (req, res, next) => {
 // [POST] /Foods/add
 const submitAddFood = async (req, res, next) => {
     try {
-        const foodId = req.params.foodId;
+        // const foodId = req.params.foodId;
 
         ///==============================================
         const foodName = req.body.foodName;
@@ -75,20 +82,24 @@ const submitAddFood = async (req, res, next) => {
         if (foodImage.match("//localhost")) foodImage = "";
 
         // nutrition
-        const Energy = text2float(req.body.nutrition.energy);
-        const Carbohydrate = text2float(req.body.nutrition.carbohydrate);
-        const Lipid = text2float(req.body.nutrition.lipid);
-        const Protein = text2float(req.body.nutrition.protein);
-        const Vitamins = req.body.nutrition.vitamins;
-        const Minerals = req.body.nutrition.minerals;
+        const energy = text2float(req.body.nutrition.energy);
+        const carbohydrate = text2float(req.body.nutrition.carbohydrate);
+        const lipid = text2float(req.body.nutrition.lipid);
+        const protein = text2float(req.body.nutrition.protein);
+        const vitamins = req.body.nutrition.vitamins;
+        const minerals = req.body.nutrition.minerals;
         //
         const foodInfo = {
             foodName, foodImage, 
-            Energy, Carbohydrate, Lipid, Protein, Vitamins, Minerals
+            energy, carbohydrate, lipid, protein, vitamins, minerals
         }
         ///==============================================
 
-        await instance.post(`/add`, foodInfo).then(response => {
+        await instance.post(`/create`, foodInfo, {
+            headers: {
+                Cookie: `token=${req.session.token}` 
+            }
+        }).then(response => {
             res.send(response.data);
         }).catch((err) => {
             console.log({message: err});
@@ -103,21 +114,33 @@ const submitAddFood = async (req, res, next) => {
 
 
 // [FUNCTION]
-const getFoodInfoByFoodId = async (foodId) => {
-    let res = await instance.get(`/info/${foodId}`).then(response => {
-        return response.data;
-    }).catch((err) => {
-        console.log({message: err});
-        return null;
-    });
+const getFoodInfoByFoodId = async (foodId, token) => {
 
-    return res;
+    try {
+        let res = await instance.get(`/info/${foodId}`,
+        {
+            headers: {
+                Cookie: `token=${token}` 
+            }
+        }
+        ).then(response => {
+            return response.data;
+        }).catch((err) => {
+            console.log({message: err});
+            throw err;
+        });
+        return res;
+    } catch (error) {
+        console.log({message: error})
+        return null;
+    }
+    
 }
 
 // [GET] /Foods/:foodId 
 const getFoodByFoodId = async (req, res, next) => {
     const foodId = req.params.foodId;
-    const responseData = await getFoodInfoByFoodId(foodId);
+    const responseData = await getFoodInfoByFoodId(foodId, req.session.token);
     res.send(responseData); 
 }
 
@@ -126,7 +149,8 @@ const getFoodByFoodId = async (req, res, next) => {
 const viewFoodInfoByFoodId = async (req, res, next) => {
     try {
         const foodId = req.params.foodId;
-        const responseData = await getFoodInfoByFoodId(foodId);
+        const responseData = await getFoodInfoByFoodId(foodId, req.session.token);
+        
         if (responseData.success) {
             let food = responseData.data;
             res.render("pages/component/food/info", {
@@ -150,7 +174,7 @@ const viewFoodInfoByFoodId = async (req, res, next) => {
 const renderFoodEditPage = async (req, res, next) => {
     try {
         const foodId = req.params.foodId;
-        const responseData = await getFoodInfoByFoodId(foodId);
+        const responseData = await getFoodInfoByFoodId(foodId, req.session.token);
 
         if (responseData.success) {
             let food = responseData.data;
@@ -187,20 +211,25 @@ const updateFoodInfo = async (req, res, next) => {
         if (foodImage.match("//localhost")) foodImage = "";
 
         // nutrition
-        const Energy = text2float(req.body.nutrition.energy);
-        const Carbohydrate = text2float(req.body.nutrition.carbohydrate);
-        const Lipid = text2float(req.body.nutrition.lipid);
-        const Protein = text2float(req.body.nutrition.protein);
-        const Vitamins = req.body.nutrition.vitamins;
-        const Minerals = req.body.nutrition.minerals;
+        const energy = text2float(req.body.nutrition.energy);
+        const carbohydrate = text2float(req.body.nutrition.carbohydrate);
+        const lipid = text2float(req.body.nutrition.lipid);
+        const protein = text2float(req.body.nutrition.protein);
+        const vitamins = req.body.nutrition.vitamins;
+        const minerals = req.body.nutrition.minerals;
         //
         const foodInfo = {
             foodName, foodImage, 
-            Energy, Carbohydrate, Lipid, Protein, Vitamins, Minerals
+            energy, carbohydrate, lipid, protein, vitamins, minerals
         }
         ///==============================================
 
-        let responseData = await instance.put(`/update/${foodId}`, foodInfo).then(response => {
+        let responseData = await instance.put(`/update/${foodId}`, foodInfo,
+        {
+            headers: {
+                Cookie: `token=${req.session.token}` 
+            }
+        }).then(response => {
             return response.data;
         }).catch((err) => {
             console.log({message: err});
@@ -233,7 +262,12 @@ const deleteFoodByFoodId = async (req, res, next) => {
     let foodId = req.params.foodId;
 
     try {
-        let responseData = await instance.delete(`/delete/${foodId}`).then(response => {
+        let responseData = await instance.delete(`/delete/${foodId}`,
+        {
+            headers: {
+                Cookie: `token=${req.session.token}` 
+            }
+        }).then(response => {
             return response.data;
         }).catch((err) => {
             console.log({message: err});
@@ -243,14 +277,14 @@ const deleteFoodByFoodId = async (req, res, next) => {
             res.status(200).json(
                 {
                     "success":true,
-                    "notice": responseData.notice,
+                    "notice": responseData.message,
                 }
             );
         } else {
             res.status(404).json(
                 {
                     "success":false,
-                    "notice": responseData.notice,
+                    "notice": responseData.message,
                 }
             );
         }

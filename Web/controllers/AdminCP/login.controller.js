@@ -19,20 +19,25 @@ let LoginSubmitEvent = async (req, res, next) => {
         }).catch((err) => {
             console.log({message: err});
         });
-    
+
         if (responseData.success) {
-            req.session.token = responseData.data.token;
+
+            req.session.token = responseData.token;
             req.session.user = {
                 "username":responseData.data.username,
-                "avatarImg": responseData.data.avatarImg
+                "isAdmin": responseData.data.permission,
+                "avatarImg": responseData.data.avatar,
             }
+            console.log(responseData.data.avatar);
+            // console.log(responseData.token)
             res.redirect("/AdminCP");
             // res.status(responseData["status"]).send("<script> alert('"+responseData["message"]+"'); window.location = '/AdminCP';</script>");
         } else {
-            res.status(responseData["status"]).send("<script> alert('"+responseData["message"]+"'); window.location = '';</script>");
+            res.status(responseData["status"]).send("<script> alert('"+responseData.message +"'); window.location = '';</script>");
         }
     } catch (error) {
-        res.status(500).send("<script> alert('500'); window.location = '';</script>");
+        console.log({message:error});
+        res.status(500).send(`<script> alert('500'); window.location = '';</script>`);
     }
 };
 

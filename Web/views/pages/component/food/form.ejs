@@ -186,7 +186,7 @@ $('#submit').on('click', delay(() => {
 
     if (foodId==="") {
         $.post(`/AdminCP/Foods/add`,data, (response, status) => {
-            alert(response.notice);
+            alert(response.message);
             if (response.success) {
                 window.location = "/AdminCP/Foods";
             } 

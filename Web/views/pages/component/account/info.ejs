@@ -6,7 +6,7 @@
         </div>
         <div class="mb-3">
             <label for="txtFullName" class="form-label">Full Name</label>
-            <input type="text" class="form-control" id="txtFullName" placeholder="<%= accountInfo.fullName %>" disabled>
+            <input type="text" class="form-control" id="txtFullName" placeholder="<%= accountInfo.name %>" disabled>
         </div>
         <div class="mb-3">
             <label for="txtEmail" class="form-label">Email</label>
@@ -33,7 +33,7 @@
         </div>
         <div class="mb-3">
             <label for="dayOfBirthday" class="form-label">Day of Birthday</label>
-            <input type="datetime" class="form-control" id="dayOfBirthday" placeholder="<%= accountInfo.dayOfBirthday %>" disabled>
+            <input type="datetime" class="form-control" id="dayOfBirthday" placeholder="<%= accountInfo.dateofbirth %>" disabled>
         </div>
     </div>
     <div class="col avatar-comp">
@@ -51,7 +51,7 @@
             <i class="align-middle" data-feather="lock"></i>
                 Chặn tài khoản
             </button>`
-            if (accountInfo.isBlocked) {
+            if (!accountInfo.status) {
                 btnBlockStatus = `<button value="${accountInfo.username}" class="btn btn-secondary btnChangeLockStatus unlock" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bỏ chặn tài khoản">
                 <i class="align-middle" data-feather="unlock"></i>
                 Bỏ chặn tài khoản
@@ -65,9 +65,9 @@
 </div>
 <br>
 <a id="btnBack" href="#" style="color: green;"><i class="align-middle" data-feather="arrow-left"></i> Trở lại </a>
-<script src="/js/pages/accounts.page.js"></script>
 <script>
 $("#btnBack").click(function(){
     history.back();
 });
 </script>
+<script src="/js/pages/accounts.page.js"></script>

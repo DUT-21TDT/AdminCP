@@ -46,7 +46,7 @@ const DataShow2Table = async (keyword="")=> {
         let trHtml = `<tr>
                 <td scope="row">${i + 1}</td>
                 <td>${food.foodName}</td>
-                <td>${food.latestUpdate}</td>`;
+                <td>${food.lastUpdate}</td>`;
         
         trHtml += `
         <td style="text-align: center;">
