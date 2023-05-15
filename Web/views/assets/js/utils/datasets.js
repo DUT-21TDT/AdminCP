@@ -1,23 +1,14 @@
-async function getData(controllerName="Foods",keyword = "", page_size = 10){
-    let res = await $.ajax({
-        url: `/AdminCP/${controllerName}/search?keyword=${keyword}`,
-        type: "GET", // <- Change here
-        contentType: "application/json",
-        success: (response) => {
-            if (response.success) {
-                return response.data;
-            }else {
-                alert("Có lỗi xảy ra!\n" + response.notice);
-            }
-        },
-        error: function (err) {
-            console.log(err);
-        }
-    });
+// pagination
+function paginate (arr, size) {
+    return arr.reduce((acc, val, i) => {
+      let idx = Math.floor(i / size)
+      let page = acc[idx] || (acc[idx] = [])
+      page.push(val)
+  
+      return acc
+    }, [])
+  }
 
-    const data = paginate(res.data, page_size);
-    return data;
-}
 
 // Implementation in ES6
 function pagination(c, m) {
@@ -79,4 +70,28 @@ const paginationView = (curr_page, data) => {
         const page_number = $(e.target).val();
         paginationView(page_number, data);
     });
+}
+  
+// get data
+async function getRespondDataFormAPI(controllerName="Foods",keyword = ""){
+    let res = await $.ajax({
+        url: `/AdminCP/${controllerName}/search?keyword=${keyword}`,
+        type: "GET", // <- Change here
+        contentType: "application/json",
+        success: (response) => {
+            if (response.success) {
+                return response.data;
+            }else {
+                alert("Có lỗi xảy ra!\n" + response.notice);
+            }
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    });
+    return res;
+}
+async function getData(controllerName="Foods",keyword = "", page_size = 10){
+    const res = await getRespondDataFormAPI(controllerName, keyword);
+    return paginate(res.data, page_size);
 }
