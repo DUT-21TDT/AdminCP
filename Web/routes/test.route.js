@@ -25,23 +25,25 @@ router.get("/login", async (req, res) => {
     res.send(token);
 })
 
-router.get("/foods", async (req, res) => {
-    //http://localhost:3001/api/v1/foods
+router.get("/user", async (req, res) => {
+    http://localhost:3001/api/v1/foods
 
-    console.log(token);
+    console.log(req.session.token);
 
-    var responseData = await instance.get("/foods",{
+    let responseData = await instance.get("/profile/bmi-records/all",{
         headers: {
-            Cookie: `token=${token}` 
+            Cookie: `token=${req.session.token}` 
         }
       }).then(response => {
         return response.data;
     }).catch((err) => {
-        // console.log({message: err});
+        console.log({message: err});
         return err;
     });
 
     res.send(responseData);
+
+    // res.sendFile(__path_views + '/statics/test.html');
 });
 
 module.exports = router;

@@ -47,29 +47,12 @@ const changeAccountStatusBtnEvent = function () {
     }
 }
 
-const DataShow2Table = async (keyword="")=> {
-
-    let res = await $.ajax({
-            url: `/AdminCP/Accounts/search?keyword=${keyword}`,
-            type: "GET", // <- Change here
-            contentType: "application/json",
-            success: (response) => {
-                if (response.success) {
-                    return response.data;
-                }else {
-                    alert("Có lỗi xảy ra!\n" + response.notice);
-                }
-            },
-            error: function (err) {
-                console.log(err);
-            }
-    });
-
+const DataShow2Table = (data, curr_page, page_size = 10)=> {
     $("#trData").empty();
 
-    $.each(res.data, (i, account) => {
+    $.each(data, (i, account) => {
         let trHtml = `<tr>
-                <td scope="row">${i + 1}</td>
+                <td scope="row">${(curr_page - 1) * page_size + (i + 1)}</td>
                 <td>${account.name}</td>
                 <td>`;
         if (!account.status){
@@ -125,12 +108,31 @@ const DataShow2Table = async (keyword="")=> {
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 }
 
-$("#trData").ready(DataShow2Table());
+//----------------------------------------------------------
+const controllerName = "Accounts";
+let data;
 
-$("#txtSearch").keyup(
-    delay(()=> {
-        let text = document.getElementById("txtSearch").value;
-        text = text.toLowerCase();
-        DataShow2Table(text);
-    }, 10)
+$("#trData").ready(async () => {
+        data = await getData(controllerName);
+        paginationView(1, data);
+    }
 );
+
+let typingTimer;
+const doneTypingInterval = 100;  //time in ms (5 seconds)
+let $input = $("#txtSearch");
+
+//on keyup, start the countdown
+$("#txtSearch").keyup(function () {
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(async () => {
+        let text = document.getElementById("txtSearch").value;
+        data = await getData(controllerName, text);
+        paginationView(1, data);
+    }, doneTypingInterval);
+});
+
+//on keydown, clear the countdown 
+$("#txtSearch").keydown(function () {
+  clearTimeout(typingTimer);
+});

@@ -28,7 +28,7 @@ let LoginSubmitEvent = async (req, res, next) => {
                 "isAdmin": responseData.data.permission,
                 "avatarImg": responseData.data.avatar,
             }
-            console.log(responseData.data.avatar);
+            // console.log(responseData.data.avatar);
             // console.log(responseData.token)
             res.redirect("/AdminCP");
             // res.status(responseData["status"]).send("<script> alert('"+responseData["message"]+"'); window.location = '/AdminCP';</script>");
