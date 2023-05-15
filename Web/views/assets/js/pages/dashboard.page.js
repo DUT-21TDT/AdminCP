@@ -1,6 +1,13 @@
 $(document).ready(async ()=>{
-    const accounts = await getRespondDataFormAPI("Accounts");
+    const getCounterNumber = async () => {
+        const accounts =  getRespondDataFormAPI("Accounts");
+        const foods =  getRespondDataFormAPI("Foods");
+        const arr = await Promise.all([accounts, foods]);
+        return arr;
+    }
+
+    const [accounts, foods] = await getCounterNumber();
+
     $("#txtMemberCounter").text(accounts.data.length);
-    const foods = await getRespondDataFormAPI("Foods");
     $("#txtFoodCounter").text(foods.data.length);
 });
