@@ -8,7 +8,7 @@ const {
     getMenuWithKeyword,
 
     renderAddMenuPage,
-    addMenu2Database,
+    addMenu,
 
     viewMenuInfo,
 
@@ -24,7 +24,7 @@ router.get("/search", auth, getMenuWithKeyword);
 
 // add
 router.get("/add", auth, renderAddMenuPage);
-router.post("/add", auth, addMenu2Database);
+router.post("/add", auth, addMenu);
 
 // view info
 router.get("/info/:menuId", auth, viewMenuInfo);

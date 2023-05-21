@@ -24,16 +24,16 @@
     let Vitamins = "";
     let Minerals = "";
     if (food) {
-        foodId = food.foodId;
-        foodName = food.foodName;
-        foodImage = food.foodImage;
+        foodId = food.foodid;
+        foodName = food.foodname;
+        foodImage = food.foodimage;
         
-        Energy = food.Energy;
-        Carbohydrate = food.Carbohydrate;
-        Lipid = food.Lipid;
-        Protein = food.Protein;
-        Vitamins = food.Vitamins;
-        Minerals = food.Minerals;
+        Energy = food.energy;
+        Carbohydrate = food.carbohydrate;
+        Lipid = food.lipid;
+        Protein = food.protein;
+        Vitamins = food.vitamins;
+        Minerals = food.minerals;
     }
 %>
 <div class="row">
@@ -79,8 +79,8 @@
                 <%
                     if (foodImage==="") foodImage = "/img/default/no-image-food.png";
                 %>
-                <img id = "foodImage" src = "<%= foodImage %>" class="rounded mx-auto d-block avatar-view" alt = "Hình ảnh thực phẩm">
-                <p id="foodImageNotice"></p>
+                <img id = "Image" src = "<%= foodImage %>" class="rounded mx-auto d-block avatar-view" alt = "Hình ảnh thực phẩm">
+                <p id="txtNotice"></p>
                 <button id="changeFoodImg" class = "btn btn-success btn-sm">Thay đổi hình ảnh thực phẩm</button>
             </center>
         </div>
@@ -118,42 +118,6 @@ $("#btnBack").click(function(){
 
 <script>
 
-$("#changeFoodImg").on("click",function (e){
-    var fileDialog = $('<input type="file" name="foodImage" accept=".png,.jpg,.jpeg">');
-    fileDialog.click();
-    fileDialog.on("change", onFileSelected);
-    return false;
-});
-
-var onFileSelected = async function(e){
-
-    var formData = new FormData();
-    formData.append('foodImage',$(this)[0].files[0]);
-    var notice = document.getElementById("foodImageNotice");
-    notice.innerText = "Đang tải ảnh, vui lòng đợi xíu nhaaa!";
-    notice.style.color = "black";
-    await $.ajax({
-            url: `/AdminCP/upload`,
-            type: "POST", // <- Change here
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: (response) => {
-                notice.innerText = response.notice;
-                notice.style.color = "red";
-                if (response.success){
-                    document.getElementById("foodImage").src = response.data.link;
-                    notice.style.color = "green";
-                }
-            },
-            error: function (err) {
-                notice.innerText = "Xảy ra lỗi khi thực hiện upload ảnh!";
-                notice.style.color = "red";
-                console.log(err);
-            }
-    });
-};
-
 $('#submit').on('click', delay(() => {
     const foodId = "<%= foodId %>";
     // get params from form
@@ -169,7 +133,7 @@ $('#submit').on('click', delay(() => {
     const txtProtein = $("#txtProtein").val();
     const txtVitamins = $("#txtVitamins").val();
     const txtMinerals = $("#txtMinerals").val();
-    const foodImage = document.getElementById("foodImage").src;
+    const foodImage = document.getElementById("Image").src;
 
     const data = {
         "foodName":txtFoodName,

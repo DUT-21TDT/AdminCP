@@ -12,3 +12,10 @@ function delay(callback, ms) {
 const text2float = (text) => {
   return parseFloat(text) ? parseFloat(text) : null; 
 };
+
+
+const privacy = {
+  private:0,
+  pending:1,
+  public:2
+}

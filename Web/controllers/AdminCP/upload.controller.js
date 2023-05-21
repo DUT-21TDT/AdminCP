@@ -38,7 +38,7 @@ var upload = multer({
       } 
   
 // mypic is the name of file attribute
-}).single("foodImage");
+}).single("Image");
 
 const uploadFile = (req, res, next) => {
     upload(req,res, async function(err) {

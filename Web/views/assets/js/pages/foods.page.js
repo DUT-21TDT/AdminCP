@@ -70,7 +70,7 @@ const controllerName = "Foods";
 let data;
 
 $("#trData").ready(async () => {
-        data = await getData("Foods");
+        data = await getData(controllerName);
         paginationView(1, data);
     }
 );
@@ -84,7 +84,7 @@ $("#txtSearch").keyup(function () {
     clearTimeout(typingTimer);
     typingTimer = setTimeout(async () => {
         let text = document.getElementById("txtSearch").value;
-        data = await getData("Foods", text);
+        data = await getData(controllerName, text);
         paginationView(1, data);
     }, doneTypingInterval);
 });

@@ -1,0 +1,251 @@
+<%
+    let menuId = "";
+    let menuName = "";
+    let menuImage = "";
+    let foodsList = [];
+    if (menu) {
+        menuId = menu.menuId;
+        menuName = menu.menuName;
+        menuImage = menu.menuImage;
+        foodsList = menu.foodsList;
+    }
+%>
+
+<div class="row">
+    <div class="mb">
+        <label for="txtMenuName" class="form-label">Tên thực đơn</label>
+        <input type="text" class="form-control" id="txtMenuName" placeholder="Vui lòng nhập tên thực đơn..." value="<%= menuName %>" required>
+    </div>
+</div>
+
+<br>
+
+<div class = "row">
+    <div class="col">
+        <div class = "row">
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                            <div class="col mt-0">
+                                <p class="card-title">Energy</p>
+                            </div>
+                        <span class="mt-1 mb-3" id="txtEnergy">0 Calo</span>
+                    </div>  
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                            <div class="col mt-0">
+                                <p class="card-title">Carbohydrate</p>
+                            </div>
+                        <span class="mt-1 mb-3" id="txtCarbohydrate">0 g</span>
+                    </div>  
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                            <div class="col mt-0">
+                                <p class="card-title">Lipid</p>
+                            </div>
+                        <span class="mt-1 mb-3" id = "txtLipid">0 g</span>
+                    </div>  
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                            <div class="col mt-0">
+                                <p class="card-title">Protein</p>
+                            </div>
+                        <span class="mt-1 mb-3" id = "txtProtein">0 g</span>
+                    </div>  
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                            <div class="col mt-0">
+                                <p class="card-title">Vitamins</p>
+                            </div>
+                        <span class="mt-1 mb-3" id = "txtVitamins"></span>
+                    </div>  
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                            <div class="col mt-0">
+                                <p class="card-title">Minerals</p>
+                            </div>
+                        <span class="mt-1 mb-3" id = "txtMinerals"></span>
+                    </div>  
+                </div>
+            </div>
+        </div>
+
+        <div class="flex">
+            <div class="card">
+                <div class = "table-responsive-sm">
+                    <table class="table table-hover my-0">
+                        <thead class="scroll-thead">
+                            <tr>
+                                <th scope="col" class ="w-75">Tên thực phẩm</th>
+                                <th scope="col" style="text-align: center;" >Số lượng</th>
+                                <th scope="col" style="text-align: center;" ></th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataFood" class="scroll-tbody-y table-body">
+                        </tbody>
+                    </table>
+                </div>           
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="col avatar-comp">
+            <center>
+                <%
+                    if (!menuImage.includes("https")) menuImage = "/img/default/no-image-food.png";
+                %> 
+                <img id = "Image" src = "<%= menuImage %>" class="rounded mx-auto d-block avatar-view" style="width: 250px; height: 250px;" alt = "Hình ảnh thực đơn">
+                <p id="txtNotice"></p>
+                <button id="changeFoodImg" class = "btn btn-success btn-sm">Thay đổi hình ảnh thực đơn</button>
+            </center>
+        </div>
+    </div>
+    <div class = "flex">
+        <% if (menuId === ""){ %>
+            <button id="submit" class = "btn btn-success">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+              </svg>  
+            
+            Thêm thông tin thực đơn</button>
+        <%} else { %>
+    
+            <a id="submit" class = "btn btn-success" value = "<%= menuId %>">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+        </svg>
+    
+            Cập nhật thông tin thực đơn</a>
+    
+        <% } %>
+
+    </div>
+    <a id="btnBack" href="#" style="color: green;"><i class="align-middle" data-feather="arrow-left"></i> Trở lại </a>
+</div>
+<br>
+<div class="row">
+    <div class="d-flex">
+        <div class="card flex-fill">
+            <div class="card-header">            
+                <div class = "card-title mb-0 table-title">
+                    Danh sách thực phẩm
+                </div>
+                
+                <div class="col-sm-3" style="margin:auto; margin-right: 10px;">
+                    <input id="txtSearch" type="text" class="form-control" placeholder="Nhập tên thực phẩm..." aria-label="Nhập tên thực phẩm...">
+                  </div>
+            </div>
+            <div class = "table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="width:20px;">#</th>
+                            <th scope="col" >Tên thực phẩm</th>
+                            <th scope="col" >Energy</th>
+                            <th scope="col" >Carbohydrate</th>
+                            <th scope="col" >Lipid</th>
+                            <th scope="col" >Protein</th>
+                            <th scope="col" >Vitamins</th>
+                            <th scope="col" >Minerals</th>
+                            <th scope="col" style="width: 15%; text-align: center;">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="trData">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="pagination" style="float: left;"></div>
+
+<script>
+$("#btnBack").click(function(){
+    history.back();
+});
+</script>
+
+<script src="/js/pages/menu/ui.menu.js"></script>
+<script src="/js/pages/menu/search.foods.js"></script>
+
+<%
+    let foodIds = "[";
+    foodsList.forEach(e => {
+        foodIds +=  `{"foodId":"${e.foodid}", "amount": ${e.amount}},`;
+    });
+    foodIds += "]";
+%>
+
+<script>
+
+
+let foodIds = <%- foodIds%>;
+
+$(document).ready(()=> {
+    loadDataFood();
+});
+
+
+$('#submit').on('click', delay(() => {
+    var menuId = "<%= menuId %>"
+    // get params from form
+    const txtFoodName = $("#txtMenuName").val();
+    if (txtFoodName.length < 3){
+        alert("Vui lòng nhập tên thực phẩm");
+        return;
+    }
+    const menuImage = document.getElementById("Image").src;
+
+    if (foodIds.length==0){
+        alert("Vui lòng thêm thực phẩm!");
+        return;
+    }
+
+    const newMenu = {
+        "menuName": txtFoodName,
+        "menuImage": menuImage,
+        "foodIds": foodIds
+    }
+
+    if (menuId==="") {
+        $.post(`/AdminCP/Menus/add`, newMenu, (response, status) => {
+            alert(response.message);
+            if (response.success) {
+                window.location = "/AdminCP/Menus";
+            } 
+        }).fail((err) => {
+            alert(err);
+        });
+    } else {
+        $.ajax({
+            url: `/AdminCP/Menus/update/${menuId}`,
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(newMenu), // access in body
+        }).done(function (response) {
+            alert(response.message);   
+            window.location = "/AdminCP/Menus";
+        }).fail(function (err) {
+            alert(err);
+        })
+    }
+}, 3));
+</script>

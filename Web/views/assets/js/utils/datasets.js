@@ -42,12 +42,12 @@ function pagination(c, m) {
     return rangeWithDots;
 }
 
-const paginationView = (curr_page, data) => {
+const paginationView = (curr_page, data, page_size = 10) => {
     if (curr_page < 1) {
         alert("Dữ liệu không hợp lệ");
         return;
     }
-    DataShow2Table(data[curr_page - 1], curr_page);
+    DataShow2Table(data[curr_page - 1], curr_page, page_size);
     const pages_threshold = 2;
     const pages = pagination(curr_page, data.length); // page 1 activate
     // ....................
