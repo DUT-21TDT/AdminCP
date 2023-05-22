@@ -37,7 +37,7 @@ let getFoodsWithKeyword = async (req, res, next) => {
             let foods = [];
 
             responseData.data.list.forEach(e => {
-                if (e.foodname.toLowerCase().includes(keyword)) 
+                if (e.foodname.toLowerCase().includes(keyword.toLowerCase())) 
                 {
                     foods.push(e);
                 }

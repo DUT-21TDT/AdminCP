@@ -35,7 +35,7 @@ const getMenuWithKeyword = async (req, res, next) => {
             let menus = [];
             
             responseData.data.list.forEach(e => {
-                if (e.menuname.toLowerCase().includes(keyword)) 
+                if (e.menuname.toLowerCase().includes(keyword.toLowerCase())) 
                 {
                     menus.push(e);
                 }

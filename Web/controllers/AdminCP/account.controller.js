@@ -32,7 +32,7 @@ let getAccountsWithKeyword = async (req, res, next) => {
             let accounts = [];
 
             responseData.data.list.forEach(e => {
-                if (e.name.toLowerCase().includes(keyword)) 
+                if (e.name.toLowerCase().includes(keyword.toLowerCase())) 
                 {
                     accounts.push(e);
                 }
