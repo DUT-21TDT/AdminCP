@@ -74,7 +74,7 @@ const addMenu = async (req, res, next) => {
     try {
         const menuName = req.body.menuName;
         let menuImage = req.body.menuImage;
-        if (menuImage.match("//localhost")) menuImage = "";
+        if (menuImage.match("img/default")) menuImage = "";
         const foodIds = req.body.foodIds;
 
         let foodsList = [];
@@ -82,7 +82,7 @@ const addMenu = async (req, res, next) => {
         foodIds.forEach(e => {
             foodsList.push({"foodid":e.foodId, "amount": e.amount});
         });
-
+        
         const menuInfo = {
             "menuName": menuName,
             "menuImage": menuImage,
@@ -193,10 +193,10 @@ const updateMenu = async (req, res, next) => {
         ///=======================
         const menuName = req.body.menuName;
         let menuImage = req.body.menuImage;
-        if (!menuImage.includes("https")) menuImage = "";
+
+        if (menuImage.includes("img/default")) menuImage = "";
         const foodIds = req.body.foodIds;
         
-
         let foodsList = [];
 
         foodIds.forEach(e => {

@@ -4,7 +4,7 @@ module.exports = async(uploadPath)=> {
     const response = await imgbbUploader(process.env.imgbb, uploadPath)
     .then((response) => { return {
         success: true,
-        url: response.url
+        url: response.display_url
     }})
     .catch((error) => {
         return {

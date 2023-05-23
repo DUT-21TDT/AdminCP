@@ -79,7 +79,7 @@ const submitAddFood = async (req, res, next) => {
         ///==============================================
         const foodName = req.body.foodName;
         let foodImage = req.body.foodImage;
-        if (foodImage.match("//localhost")) foodImage = "";
+        if (foodImage.match("img/default")) foodImage = "";
 
         // nutrition
         const energy = text2float(req.body.nutrition.energy);
@@ -208,7 +208,7 @@ const updateFoodInfo = async (req, res, next) => {
         ///==============================================
         const foodName = req.body.foodName;
         let foodImage = req.body.foodImage;
-        if (foodImage.match("//localhost")) foodImage = "";
+        if (foodImage.match("img/default")) foodImage = "";
 
         // nutrition
         const energy = text2float(req.body.nutrition.energy);
