@@ -247,7 +247,7 @@ $(document).ready(async ()=> {
         // render to HTML
         if (food) {
             const trHTML = `<tr>
-                            <td  class ="w-100">[${food.foodid}] <a href="#" style="color:black;">${food.foodname}</a></td>
+                            <td  class ="w-100">[${food.foodid}] <a href="/AdminCP/Foods/info/${food.foodid}" style="color:black;">${food.foodname}</a></td>
                             <td style="text-align: center;" >${amount}</td>
                         </tr>`;
             $("#dataFood").append(trHTML);
