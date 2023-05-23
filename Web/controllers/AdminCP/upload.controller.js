@@ -53,8 +53,12 @@ const uploadFile = (req, res, next) => {
         else {
   
             // SUCCESS, image successfully uploaded
-            const imgurUpload = require("./imgur.controller");
-            let responseData = await imgurUpload(req.file.path);
+            // const imgurUpload = require("./imgur.controller");
+            // let responseData = await imgurUpload(req.file.path);
+
+            // ImgBB
+            const imgbbUploader = require("./imgbb.controller");
+            let responseData = await imgbbUploader(req.file.path);
 
             try {
                 fs.unlinkSync(req.file.path);
@@ -67,7 +71,7 @@ const uploadFile = (req, res, next) => {
                     "success":true,
                     "notice": "Image uploaded",
                     "data": {
-                        "link":responseData.data.link
+                        "link":responseData.url
                     }
                 });
             } else {
