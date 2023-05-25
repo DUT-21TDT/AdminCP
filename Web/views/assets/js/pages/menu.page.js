@@ -48,7 +48,7 @@ const DataShow2Table = (data, curr_page, page_size = 10)=> {
     $("#trData").empty();
     $.each(data, (i, m) => { 
         let trHtml = `<tr>
-                <td scope="row">${i + 1}</td>
+                <td scope="row">${(curr_page - 1) * page_size + (i + 1)}</td>
                 <td>${m.menuname}</td>`;
         
         if (m.privacy === privacy.public) {
