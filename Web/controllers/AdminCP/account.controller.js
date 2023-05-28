@@ -56,24 +56,31 @@ let getAccountsWithKeyword = async (req, res, next) => {
     }
 };
 
-let getAccountInfoByID = async (req, res, next) => {
-    const accountId = req.params.id;
-
-    try {
-        let responseData = await instance.get("/" + accountId, 
+let getAccountInfoByID = async(accountId, token) => {
+    let responseData = await instance.get("/" + accountId,
         {
             headers: {
-                Cookie: `token=${req.session.token}` 
+                Cookie: `token=${token}` 
             }
         }
         ).then(response => {
             return response.data;
         }).catch((err) => {
             console.log({message: err});
-            res.send("<script> alert('Do not find accountId = "+accountId+"'); window.location = '/AdminCP/Accounts';</script>");
+            return null;
         });
+    return responseData;
+}
 
-        console.log(responseData)
+let renderAccountInfo = async (req, res, next) => {
+    const accountId = req.params.id;
+
+    const responseData = await getAccountInfoByID(accountId, req.session.token);
+
+    try {
+        if (!responseData) {
+            res.send(`<script> alert('Do not find accountId = ${accountId}'); window.location = '/AdminCP/Accounts';</script>`);
+        }
 
         if (responseData.success) {
             res.render("pages/component/account/info", {
@@ -172,7 +179,8 @@ let deleteAccountByUsername = async (req, res, next) => {
 module.exports = {
     renderAccountsPageView,
     getAccountsWithKeyword,
-    getAccountInfoByID,
+    renderAccountInfo,
     changeBlockStatus,
     deleteAccountByUsername,
+    getAccountInfoByID,
 };

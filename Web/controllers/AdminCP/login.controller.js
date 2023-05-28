@@ -23,11 +23,8 @@ let LoginSubmitEvent = async (req, res, next) => {
         if (responseData.success) {
 
             req.session.token = responseData.token;
-            req.session.user = {
-                "username":responseData.data.username,
-                "isAdmin": responseData.data.permission,
-                "avatarImg": responseData.data.avatar,
-            }
+            req.session.userId = responseData.data.userid;
+            
             // console.log(responseData.data.avatar);
             // console.log(responseData.token)
             res.redirect("/AdminCP");

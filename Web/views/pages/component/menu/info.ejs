@@ -96,7 +96,7 @@
 
     <div class="col">
         <%
-            if (!menu.menuImage.includes("https")) 
+            if (menu.menuImage === null || menu.menuImage==="" || menu.menuImage.includes("/img/default")) 
                 menu.menuImage = "/img/default/no-image-food.png";
         %>
         <img id = "menuImage" src = "<%= menu.menuImage %>" class="rounded mx-auto d-block avatar-view" alt = "Hình ảnh thực đơn">

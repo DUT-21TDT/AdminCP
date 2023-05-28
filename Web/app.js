@@ -40,7 +40,6 @@ app.use(session({
   cookie: { maxAge: 60 * 60000 }})); // 60000 is one minute
 
 app.use(function(req, res, next) {
-    res.locals.user = req.session.user;
     res.locals.token = req.session.token;
     next();
   });
