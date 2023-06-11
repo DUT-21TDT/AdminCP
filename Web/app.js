@@ -36,6 +36,7 @@ app.use(
 );
 
 app.use(session({
+  name:'admin_cookie',
   resave: false, 
   saveUninitialized: true, 
   secret: 'pbl3abcxyz',   
