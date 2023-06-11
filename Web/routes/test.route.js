@@ -46,4 +46,17 @@ router.get("/user", async (req, res) => {
     // res.sendFile(__path_views + '/statics/test.html');
 });
 
+router.get("/tags", async (req, res) => {
+   const tags = ["1"];
+   const data = await instance.get("/public/foods/tag-filter", {data: {tagids:tags}})
+   .then(response => {
+      return response.data;
+  }).catch((err) => {
+      console.log({message: err});
+      return err;
+  });
+  console.log(data);
+   res.json(data);
+});
+
 module.exports = router;

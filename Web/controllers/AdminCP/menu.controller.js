@@ -212,7 +212,7 @@ const updateMenu = async (req, res, next) => {
         console.log(menuInfo);
 
         ///====================================
-        let responseData = await instance.put(`/menuid=${menuId}/update`, menuInfo, {
+        await instance.put(`/menuid=${menuId}/update`, menuInfo, {
             headers: {
                 Cookie: `token=${req.session.token}` 
             }
@@ -220,9 +220,10 @@ const updateMenu = async (req, res, next) => {
             res.send(response.data);
         }).catch((err) => {
             console.log({message: err.message});
-            return {
+            res.json({
                 "success": false,
-            }
+                "message": "Không thể cập nhật thông tin thực đơn này!"
+            })
         });
 
     } catch (err){

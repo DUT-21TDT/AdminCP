@@ -9,6 +9,8 @@ const rfs         = require("rotating-file-stream");
 const pathConfig  = require('./path');
 const dotenv      = require("dotenv");
 const session     = require('express-session');
+// const cookieParser = require('cookie-parser');
+
 dotenv.config();
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -34,10 +36,12 @@ app.use(
 );
 
 app.use(session({
-  resave: true, 
+  resave: false, 
   saveUninitialized: true, 
-  secret: 'somesecret', 
-  cookie: { maxAge: 60 * 60000 }})); // 60000 is one minute
+  secret: 'pbl3abcxyz',   
+  cookie: { maxAge: 60 * 60000}})); // 60000 is one minute
+
+// app.use(cookieParser());
 
 app.use(function(req, res, next) {
     res.locals.token = req.session.token;
@@ -83,6 +87,8 @@ app.use((req, res, next)=> {
 app.use((err, req, res, next)=> {
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+    console.log(err);
 
     // render the error page
     res.status(err.status || 500);
